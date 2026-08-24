@@ -1,0 +1,111 @@
+# PRD-003: Persistencia con Entity Framework Core
+
+| Campo | Valor |
+| --- | --- |
+| Estado | Propuesto |
+| Prioridad | Alta |
+| Dependencias | PRD-002 |
+| Módulo propietario | `Data` |
+| Historias relacionadas | HU01–HU04 |
+
+## Problema y objetivo
+
+El modelo de dominio definido en PRD-002 aún no tiene una frontera de persistencia. Este PRD establece cómo se mapearán las entidades a SQL Server mediante Entity Framework Core, manteniendo las reglas de almacenamiento separadas de los módulos de negocio.
+
+## Alcance
+
+- Crear `AppDbContext` en `Data`.
+- Exponer `DbSet` para las cinco entidades.
+- Crear configuraciones separadas por entidad en `Data/Configurations`.
+- Configurar claves, relaciones, restricciones, índices y precisión decimal.
+- Registrar el contexto mediante inyección de dependencias.
+
+Fuera de alcance: creación de migraciones y base de datos local, que pertenecen a PRD-004; services, controllers, DTOs, autenticación y reportes.
+
+## Configuración esperada
+
+El contexto debe incluir:
+
+```csharp
+DbSet<Categoria> Categorias
+DbSet<Producto> Productos
+DbSet<Cliente> Clientes
+DbSet<Venta> Ventas
+DbSet<DetalleVenta> DetalleVentas
+```
+
+Las configuraciones deben cubrir:
+
+- Llaves primarias y generación de identificadores.
+- Relación obligatoria de `Producto` con `Categoria`.
+- Relación obligatoria de `Venta` con `Cliente`.
+- Relación obligatoria de `DetalleVenta` con `Venta` y `Producto`.
+- Índice único para `Producto.Codigo`.
+- Índice único para `Cliente.Documento`.
+- Precisión consistente, por ejemplo `decimal(18,2)`, para precio, subtotal y total.
+- Longitudes y nulabilidad coherentes con el modelo.
+
+## Actores y consumidores
+
+- Services de los módulos, que consultarán y persistirán entidades.
+- Comandos de EF Core y migraciones.
+- SQL Server como motor de datos objetivo.
+- Pruebas de persistencia y de integración de la API.
+
+## Interfaces y tipos afectados
+
+- `AppDbContext` como punto de acceso de persistencia.
+- Clases `IEntityTypeConfiguration<T>` o configuración equivalente.
+- Registro de `DbContext` con la cadena `ConnectionStrings:DefaultConnection`.
+
+El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones no deben contener reglas de negocio de ventas o inventario.
+
+## Impacto en datos
+
+Este PRD define el esquema lógico que utilizará la migración inicial. Las restricciones de base de datos deben reforzar, no reemplazar, las validaciones de entrada y de service.
+
+## Criterios de aceptación
+
+- `AppDbContext` contiene los cinco `DbSet` esperados.
+- Las cinco entidades tienen configuración de tabla y clave primaria.
+- Las relaciones y claves foráneas son obligatorias donde lo exige el dominio.
+- Los índices de código de producto y documento de cliente son únicos.
+- Los campos monetarios usan precisión explícita y no quedan con la precisión por defecto.
+- El contexto se registra por inyección de dependencias sin crear conexiones manuales en los services.
+- `dotnet build` continúa pasando sin errores ni advertencias.
+- El código de persistencia permanece dentro de `Data` y `Data/Configurations`.
+
+## Casos de prueba y verificación
+
+| Caso | Resultado esperado |
+| --- | --- |
+| Resolver `AppDbContext` desde el contenedor | Se obtiene una instancia configurada. |
+| Inspeccionar el modelo EF | Existen las cinco entidades y sus relaciones. |
+| Revisar el índice de `Producto.Codigo` | Está marcado como único. |
+| Revisar el índice de `Cliente.Documento` | Está marcado como único. |
+| Revisar propiedades monetarias | Tienen precisión explícita. |
+| Ejecutar compilación | 0 errores y 0 advertencias. |
+
+## Riesgos y decisiones pendientes
+
+- La cadena de conexión no debe contener secretos en el repositorio; usar variables de entorno o User Secrets en desarrollo.
+- Debe definirse el comportamiento de borrado de relaciones para no eliminar ventas históricas accidentalmente.
+- La estrategia de nombres de tablas y columnas debe mantenerse consistente antes de generar la migración.
+
+## Trazabilidad
+
+| Evidencia | Valor |
+| --- | --- |
+| Rama | Pendiente |
+| Commit o PR | Pendiente |
+| Archivos modificados | Pendiente |
+| Pruebas ejecutadas | Pendiente |
+| Evidencia adicional | Pendiente |
+| Responsable y fecha de implementación | Pendiente |
+
+## Referencias
+
+- [`docs/System_Artifact.md`](../docs/System_Artifact.md), sección 10.
+- [`docs/Architecture.md`](../docs/Architecture.md).
+- [`src/InventarioVentas.API/Data/README.md`](../src/InventarioVentas.API/Data/README.md).
+- [`src/InventarioVentas.API/Data/Configurations/README.md`](../src/InventarioVentas.API/Data/Configurations/README.md).
