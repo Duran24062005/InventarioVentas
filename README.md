@@ -11,6 +11,7 @@ La regla mas importante es que cada cambio debe quedar en el modulo al que perte
 ## Donde encontrar cada cosa
 
 - [docs/](docs/README.md): decisiones de arquitectura, alcance funcional y comandos de configuracion.
+- [prd/](prd/README.md): PRDs ordenados por dependencia y registro de trazabilidad del proyecto.
 - [src/](src/README.md): codigo fuente.
 - [src/InventarioVentas.API/](src/InventarioVentas.API/README.md): API principal y composicion de la aplicacion.
 - [docs/Architecture.md](docs/Architecture.md): explicacion completa de la arquitectura modular.
