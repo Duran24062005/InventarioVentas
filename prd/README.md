@@ -29,6 +29,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 | PRD-009 | [Módulo de ventas y transacción de stock](PRD-009-modulo-ventas-y-transaccion-stock.md) | Propuesto | PRD-007, PRD-008 |
 | PRD-010 | [Pruebas y verificación de la API](PRD-010-pruebas-y-verificacion-api.md) | Propuesto | PRD-005 a PRD-009 |
 | PRD-011 | [Cierre, documentación y definición de terminado](PRD-011-cierre-documentacion-y-definicion-de-terminado.md) | Propuesto | PRD-001 a PRD-010 |
+| PRD-012 | [Dockerización y ejecución con contenedores](PRD-012-dockerizacion-y-ejecucion-contenedores.md) | Terminado | PRD-001 |
 
 ## Orden de implementación
 

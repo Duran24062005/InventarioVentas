@@ -233,7 +233,23 @@ http://localhost:5011/swagger/v1/swagger.json
 
 La ruta `/weatherforecast` ya no existe; la API solo expone endpoints cuando se implementan y mapean controllers de los módulos.
 
-### 8. Inicializar Git
+### 8. Ejecutar con Docker
+
+Desde la raíz del repositorio:
+
+```bash
+docker compose up --build
+```
+
+La API queda disponible en `http://localhost:8080/swagger`. Para detenerla:
+
+```bash
+docker compose down
+```
+
+El flujo Docker está documentado con más detalle en [`docs/Docker.md`](Docker.md). La configuración actual empaqueta únicamente la API; todavía no incluye SQL Server.
+
+### 9. Inicializar Git
 
 Desde la raíz `InventarioVentas`:
 
