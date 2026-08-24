@@ -10,7 +10,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 | Rama | `main` |
 | SDK .NET | `10.0.111` |
 | Compilación | Exitosa: 0 errores, 0 advertencias |
-| Implementación funcional | Scaffold inicial; solo existe `weatherforecast` |
+| Implementación funcional | Base técnica terminada; módulos de negocio aún pendientes |
 | Persistencia | Sin entidades, `DbContext` ni migraciones |
 | Pruebas funcionales | No implementadas |
 
@@ -18,7 +18,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 
 | ID | Documento | Estado | Dependencias |
 | --- | --- | --- | --- |
-| PRD-001 | [Base técnica y composición de la API](PRD-001-base-tecnica-y-composicion-api.md) | Propuesto | Ninguna |
+| PRD-001 | [Base técnica y composición de la API](PRD-001-base-tecnica-y-composicion-api.md) | Terminado | Ninguna |
 | PRD-002 | [Modelo de dominio](PRD-002-modelo-de-dominio.md) | Propuesto | PRD-001 |
 | PRD-003 | [Persistencia con Entity Framework](PRD-003-persistencia-entity-framework.md) | Propuesto | PRD-002 |
 | PRD-004 | [Configuración de base de datos y migraciones](PRD-004-configuracion-base-datos-y-migraciones.md) | Propuesto | PRD-003 |
@@ -32,7 +32,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 
 ## Orden de implementación
 
-La secuencia recomendada es `PRD-001` → `PRD-002` → `PRD-003` → `PRD-004` y `PRD-005`; después pueden implementarse Categorías y Clientes en paralelo, Productos después de Categorías y Ventas cuando Productos y Clientes estén disponibles. PRD-010 y PRD-011 cierran la verificación y la documentación.
+La secuencia recomendada es `PRD-001` → `PRD-002` → `PRD-003` → `PRD-004` y `PRD-005`; después pueden implementarse Categorías y Clientes en paralelo, Productos después de Categorías y Ventas cuando Productos y Clientes estén disponibles. PRD-010 y PRD-011 cierran la verificación y la documentación. PRD-001 ya está terminado en la rama de composición técnica.
 
 Cada PRD debe actualizar su estado y su sección de trazabilidad cuando se implemente. No se debe marcar como terminado solo porque el código compile: también deben cumplirse sus criterios de aceptación y registrarse las pruebas ejecutadas.
 

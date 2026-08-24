@@ -1197,3 +1197,11 @@ InventarioVentas.API
 Y **no agregaría Clean Architecture, CQRS, MediatR, Unit of Work, Repository Pattern ni varios proyectos `.csproj` todavía**. Para el objetivo que tienen, eso les puede hacer gastar más tiempo entendiendo infraestructura que aprendiendo ASP.NET Core.
 
 El siguiente paso natural sería definir **qué debe contener cada archivo** (`Categoria.cs`, `CrearProductoDto.cs`, `IProductoService.cs`, `ProductoService.cs`, `ProductosController.cs`, `AppDbContext.cs`, etc.) y con eso ya tendrían prácticamente el esqueleto completo para empezar a programar.
+
+## Composición técnica implementada
+
+La base de la API se compone en `Program.cs` mediante `AddControllers`, `AddEndpointsApiExplorer` y `AddSwaggerGen`. El pipeline aplica `UseHttpsRedirection` y `MapControllers`.
+
+Swashbuckle es la estrategia única para documentar OpenAPI en esta etapa. Swagger UI y `/swagger/v1/swagger.json` se habilitan únicamente en Development; no se combinan con `AddOpenApi` ni con `Microsoft.AspNetCore.OpenApi`.
+
+La API ya no expone el endpoint de ejemplo `weatherforecast`. Mientras no existan controllers funcionales, Swagger mostrará únicamente la especificación base de la aplicación.

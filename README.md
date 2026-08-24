@@ -27,6 +27,8 @@ dotnet build
 dotnet run --project src/InventarioVentas.API/InventarioVentas.API.csproj
 ```
 
+En desarrollo, Swagger UI queda disponible en `http://localhost:5011/swagger` y `https://localhost:7176/swagger` cuando se ejecuta con el perfil correspondiente. La especificacion JSON se encuentra en `/swagger/v1/swagger.json`.
+
 Los comandos de instalacion y configuracion estan en [docs/project_configuration_commands.md](docs/project_configuration_commands.md).
 
 ## Reglas para colaborar
@@ -40,6 +42,8 @@ Los comandos de instalacion y configuracion estan en [docs/project_configuration
 
 ## Estado actual
 
-La estructura modular ya esta creada, pero la implementacion funcional se encuentra en una etapa inicial. Las carpetas de los modulos contienen README para explicar donde debe ir cada pieza antes de agregar codigo.
+La base tecnica de la API ya esta implementada: se registran controllers, Swagger y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. La implementacion funcional de Categorias, Productos, Clientes y Ventas aun esta pendiente; sus carpetas contienen README y PRDs para guiar cada entrega.
+
+El siguiente entregable es PRD-002, que define las entidades y relaciones del dominio.
 
 No se documentan `bin/` ni `obj/` porque son salidas generadas por .NET. Tampoco se agregan README a `.git`, `.agents` o `.codex`, porque no forman parte del codigo funcional del proyecto.
