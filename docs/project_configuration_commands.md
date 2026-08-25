@@ -63,11 +63,13 @@ Si ya la tenías instalada y quieres actualizarla:
 dotnet tool update --global dotnet-ef --version 10.0.11
 ```
 
-### 4. Instalar Swagger
+### 4. Instalar y configurar Swagger
 
 ```bash
 dotnet add package Swashbuckle.AspNetCore
 ```
+
+La API usa Swashbuckle como estrategia unica de documentacion OpenAPI. No es necesario agregar `Microsoft.AspNetCore.OpenApi` ni configurar simultaneamente `AddOpenApi`; mantener ambas estrategias duplicaria la composicion de documentacion.
 
 ### 5. FluentValidation
 
@@ -221,9 +223,33 @@ Luego:
 dotnet run
 ```
 
-Si todo está bien, la API debería iniciar sin errores.
+Si todo está bien, la API debería iniciar sin errores. En desarrollo, verifica Swagger en:
 
-### 8. Inicializar Git
+```text
+http://localhost:5011/swagger
+https://localhost:7176/swagger
+http://localhost:5011/swagger/v1/swagger.json
+```
+
+La ruta `/weatherforecast` ya no existe; la API solo expone endpoints cuando se implementan y mapean controllers de los módulos.
+
+### 8. Ejecutar con Docker
+
+Desde la raíz del repositorio:
+
+```bash
+docker compose up --build
+```
+
+La API queda disponible en `http://localhost:8080/swagger`. Para detenerla:
+
+```bash
+docker compose down
+```
+
+El flujo Docker está documentado con más detalle en [`docs/Docker.md`](Docker.md). La configuración actual empaqueta únicamente la API; todavía no incluye SQL Server.
+
+### 9. Inicializar Git
 
 Desde la raíz `InventarioVentas`:
 

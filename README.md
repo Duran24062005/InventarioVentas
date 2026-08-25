@@ -11,6 +11,7 @@ La regla mas importante es que cada cambio debe quedar en el modulo al que perte
 ## Donde encontrar cada cosa
 
 - [docs/](docs/README.md): decisiones de arquitectura, alcance funcional y comandos de configuracion.
+- [docs/Docker.md](docs/Docker.md): instrucciones para construir y ejecutar la API con Docker.
 - [prd/](prd/README.md): PRDs ordenados por dependencia y registro de trazabilidad del proyecto.
 - [src/](src/README.md): codigo fuente.
 - [src/InventarioVentas.API/](src/InventarioVentas.API/README.md): API principal y composicion de la aplicacion.
@@ -27,7 +28,17 @@ dotnet build
 dotnet run --project src/InventarioVentas.API/InventarioVentas.API.csproj
 ```
 
+En desarrollo, Swagger UI queda disponible en `http://localhost:5011/swagger` y `https://localhost:7176/swagger` cuando se ejecuta con el perfil correspondiente. La especificacion JSON se encuentra en `/swagger/v1/swagger.json`.
+
 Los comandos de instalacion y configuracion estan en [docs/project_configuration_commands.md](docs/project_configuration_commands.md).
+
+Tambien puedes ejecutar la API con Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. La configuracion actual contiene solo la API; SQL Server se incorporara junto con PRD-003 y PRD-004.
 
 ## Reglas para colaborar
 
@@ -40,6 +51,8 @@ Los comandos de instalacion y configuracion estan en [docs/project_configuration
 
 ## Estado actual
 
-La estructura modular ya esta creada, pero la implementacion funcional se encuentra en una etapa inicial. Las carpetas de los modulos contienen README para explicar donde debe ir cada pieza antes de agregar codigo.
+La base tecnica de la API ya esta implementada: se registran controllers, Swagger y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. La implementacion funcional de Categorias, Productos, Clientes y Ventas aun esta pendiente; sus carpetas contienen README y PRDs para guiar cada entrega.
+
+El siguiente entregable es PRD-002, que define las entidades y relaciones del dominio.
 
 No se documentan `bin/` ni `obj/` porque son salidas generadas por .NET. Tampoco se agregan README a `.git`, `.agents` o `.codex`, porque no forman parte del codigo funcional del proyecto.

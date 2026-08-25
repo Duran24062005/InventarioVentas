@@ -7,9 +7,12 @@ La hoja de ruta implementable y su trazabilidad se mantienen en [`../prd/README.
 ## Archivos
 
 - `Architecture.md`: explica el monolito modular, sus modulos y las reglas de separacion de responsabilidades.
+- `Docker.md`: documenta la construccion y ejecucion local de la API con Docker y Docker Compose.
 - `System_Artifact.md`: define el problema, el alcance, el modelo de dominio y las reglas funcionales.
 - `project_configuration_commands.md`: contiene los comandos para crear, configurar, restaurar, compilar y ejecutar el proyecto con .NET 10.
 - [`../prd/README.md`](../prd/README.md): indice de PRDs, dependencias, historias relacionadas y decisiones abiertas.
+
+La composicion tecnica actual usa `AddControllers`, `AddEndpointsApiExplorer`, `AddSwaggerGen`, `UseHttpsRedirection` y `MapControllers`. Swagger UI se expone solo en Development; no se deben agregar secretos a los archivos `appsettings`.
 
 ## Como usar esta carpeta
 
