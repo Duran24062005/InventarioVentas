@@ -30,7 +30,7 @@ Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productiv
 - Puerto interno: `8080`, mediante `ASPNETCORE_HTTP_PORTS`.
 - Compose de desarrollo: `ASPNETCORE_ENVIRONMENT=Development`.
 - No se agregan secretos al repositorio; la contraseña de PostgreSQL llega por `POSTGRES_PASSWORD`.
-- El contenedor usa el `CategoriaDbContext` provisional; el `AppDbContext` completo y las migraciones pertenecen a PRD-003/004/006.
+- El contenedor usa el `CategoryDbContext` provisional; el `AppDbContext` completo y las migraciones pertenecen a PRD-003/004/006.
 
 ## Artefactos y contratos
 

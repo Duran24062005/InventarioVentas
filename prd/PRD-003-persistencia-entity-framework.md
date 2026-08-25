@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoriaDbContext` inicial usado por el service de Categorías, registrado con PostgreSQL, pero no corresponde todavía al `AppDbContext` previsto y no tiene migraciones.
+El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoryDbContext` inicial usado por el service de Categorías, registrado con PostgreSQL, pero no corresponde todavía al `AppDbContext` previsto y no tiene migraciones.
 
 ## Alcance
 
@@ -62,10 +62,10 @@ El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones n
 
 ## Estado actual de implementación
 
-- Existe `Data/Configurations/CategoriaDb.cs` con un `CategoriaDbContext` y un único `DbSet<Categoria>`.
-- `CategoriasService` depende de ese contexto para ejecutar un CRUD inicial.
+- Existe `Data/Configurations/CategoriaDb.cs` con un `CategoryDbContext` y un único `DbSet<Categoria>`.
+- `CategoryService` depende de ese contexto para ejecutar un CRUD inicial.
 - No existen todavía `AppDbContext`, las entidades completas del dominio ni las cinco configuraciones esperadas.
-- `Program.cs` registra `ICategoriasService` y `CategoriaDbContext` mediante `UseNpgsql`.
+- `Program.cs` registra `ICategoryService` y `CategoryDbContext` mediante `UseNpgsql`.
 - `appsettings.json` declara `ConnectionStrings:DefaultConnection` sin valor; el valor real debe llegar desde User Secrets, variables de entorno o Compose.
 
 ## Impacto en datos
@@ -82,7 +82,7 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 - El contexto se registra por inyección de dependencias sin crear conexiones manuales en los services.
 - `dotnet build` continúa pasando sin errores ni advertencias.
 - El código de persistencia permanece dentro de `Data` y `Data/Configurations`.
-- El `CategoriaDbContext` provisional se reemplaza o integra en el `AppDbContext` definido por este PRD.
+- El `CategoryDbContext` provisional se reemplaza o integra en el `AppDbContext` definido por este PRD.
 
 ## Casos de prueba y verificación
 
@@ -107,7 +107,7 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 | --- | --- |
 | Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoriaDb.cs` y `src/InventarioVentas.API/Modules/Categorias/Services/CategoriasService.cs` contienen la implementación parcial actual |
+| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoriaDb.cs` y `src/InventarioVentas.API/Modules/Categories/Services/CategoryService.cs` contienen la implementación parcial actual |
 | Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque sin conexión falla con el mensaje esperado |
 | Evidencia adicional | La implementación parcial no cumple aún el contrato de cinco entidades, relaciones, índices y precisión decimal |
 | Responsable y fecha de implementación | Pendiente |

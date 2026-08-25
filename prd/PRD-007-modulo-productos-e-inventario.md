@@ -5,7 +5,7 @@
 | Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-006 |
-| Módulo propietario | `Modules/Productos` |
+| Módulo propietario | `Modules/Products` |
 | Historias relacionadas | HU02 y HU03 |
 
 ## Problema y objetivo
@@ -61,8 +61,8 @@ Las respuestas son DTOs y pueden incluir datos de la categoría; la entidad pers
 ## Interfaces y componentes
 
 - DTOs de crear, actualizar y respuesta.
-- `IProductoService` con capacidades de consulta y mantenimiento necesarias para Productos y Ventas.
-- `ProductoService` para unicidad, categoría, estado y persistencia.
+- `IProductService` con capacidades de consulta y mantenimiento necesarias para Productos y Ventas.
+- `ProductService` para unicidad, categoría, estado y persistencia.
 - Validators para estructura, rangos y campos obligatorios.
 - `ProductosController` limitado a coordinación HTTP.
 
@@ -72,8 +72,8 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 
 ## Estado actual de implementación
 
-- Existen `CrearProductoDto`, `ProductoResponseDto`, `IProductoService`, `ProductoService` y `CrearProductoValidator`.
-- `ProductoService` está vacío y no hay `ProductosController` ni modelo `Producto`.
+- Existen `CreateProductDto`, `ProductResponseDto`, `IProductService`, `ProductService` y `CreateProductValidator`.
+- `ProductService` está vacío y no hay `ProductosController` ni modelo `Producto`.
 - El DTO actual usa `int CategoriaId`, mientras el modelo de Categorías inicial usa `Guid Id`; esta incompatibilidad debe resolverse al cerrar PRD-002.
 - El validator cubre nombre, código, precio, stock y categoría, pero todavía no está registrado ni ejecutado por la API.
 - No existen consultas de unicidad, verificación de categoría, persistencia, actualización, desactivación ni control de stock.
@@ -116,7 +116,7 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 | --- | --- |
 | Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | DTOs, interfaz, service vacío y validator inicial en `Modules/Productos` |
+| Archivos modificados | DTOs, interfaz, service vacío y validator inicial en `Modules/Products` |
 | Pruebas ejecutadas | Revisión estática; no hay endpoints ni pruebas funcionales |
 | Endpoints verificados | Pendiente |
 | Responsable y fecha de implementación | Pendiente |
@@ -124,5 +124,5 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 ## Referencias
 
 - [`docs/System_Artifact.md`](../docs/System_Artifact.md), secciones 5.2, 6.2, 7.2, 9, 11 y 15.
-- [`src/InventarioVentas.API/Modules/Productos/README.md`](../src/InventarioVentas.API/Modules/Productos/README.md).
+- [`src/InventarioVentas.API/Modules/Products/README.md`](../src/InventarioVentas.API/Modules/Products/README.md).
 - READMEs de `Controllers`, `DTOs`, `Interfaces`, `Services` y `Validators` de Productos.
