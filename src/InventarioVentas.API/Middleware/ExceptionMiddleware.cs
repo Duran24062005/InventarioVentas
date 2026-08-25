@@ -45,13 +45,13 @@ public class ExceptionMiddleware
 
         context.Response.StatusCode = (int)statusCode;
 
-        var respuesta = new
+        var response = new
         {
             mensaje = exception.Message
         };
 
 
-        var json = JsonSerializer.Serialize(respuesta);
+        var json = JsonSerializer.Serialize(response);
         return context.Response.WriteAsync(json);
     }
 

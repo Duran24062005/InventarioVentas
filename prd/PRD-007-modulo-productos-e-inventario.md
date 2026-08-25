@@ -73,8 +73,8 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 ## Estado actual de implementación
 
 - Existen `CreateProductDto`, `ProductResponseDto`, `IProductService`, `ProductService` y `CreateProductValidator`.
-- `ProductService` está vacío y no hay `ProductosController` ni modelo `Producto`.
-- El DTO actual usa `int CategoriaId`, mientras el modelo de Categorías inicial usa `Guid Id`; esta incompatibilidad debe resolverse al cerrar PRD-002.
+- `ProductService` está vacío y no hay `ProductsController`; el modelo interno es `Product` y está ubicado en `Modules/Products/Models`.
+- El DTO actual usa `int CategoryId`, mientras los modelos `Category` y `Product` usan `Guid`; esta incompatibilidad debe resolverse al cerrar PRD-002.
 - El validator cubre nombre, código, precio, stock y categoría, pero todavía no está registrado ni ejecutado por la API.
 - No existen consultas de unicidad, verificación de categoría, persistencia, actualización, desactivación ni control de stock.
 
