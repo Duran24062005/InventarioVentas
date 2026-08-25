@@ -64,7 +64,7 @@ No cambia el esquema de datos. Afecta el contrato HTTP de todos los módulos y e
 - Existen `BusinessException`, `NotFoundException` y `ValidationException` en `Common/Exceptions`.
 - Existe `ApiResponse<T>` en `Common/Responses`, pero ningún controller actual lo utiliza.
 - Hay dos middlewares (`ExceptionMiddleware` y `ExceptionHandlingMiddleware`) con formatos, idioma y comportamiento distintos; ninguno está registrado en `Program.cs`.
-- `CrearCategoriaValidator` y `CrearProductoValidator` existen, pero no están registrados ni ejecutados automáticamente.
+- `CreateCategoryValidator` y `CreateProductValidator` existen, pero no están registrados ni ejecutados automáticamente.
 - La API todavía no tiene un contrato de errores verificado mediante requests reales.
 
 ## Criterios de aceptación

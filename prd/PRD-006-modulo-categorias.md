@@ -5,12 +5,12 @@
 | Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-002, PRD-003 y PRD-005 |
-| Módulo propietario | `Modules/Categorias` |
+| Módulo propietario | `Modules/Categories` |
 | Historias relacionadas | HU01 |
 
 ## Problema y objetivo
 
-Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial conectado al `CategoriaDbContext` provisional, pero todavía no cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
+Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial conectado al `CategoryDbContext` provisional, pero todavía no cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
 
 ## Alcance
 
@@ -43,7 +43,7 @@ Request mínimo de creación/actualización:
 
 La respuesta debe usar un DTO y no exponer directamente la entidad EF Core.
 
-El código actual no coincide completamente con este contrato: `CrearCategoriaDto` y `ActualizarCategoriaDto` exigen también `FechaCreacion` y `Estado`, aunque el service asigna o controla esos valores. La decisión objetivo es que las propiedades controladas por backend no sean obligatorias en el request de creación.
+El código actual no coincide completamente con este contrato: `CreateCategoryDto` y `UpdateCategoryDto` exigen también `FechaCreacion` y `Estado`, aunque el service asigna o controla esos valores. La decisión objetivo es que las propiedades controladas por backend no sean obligatorias en el request de creación.
 
 ## Reglas funcionales
 
@@ -60,15 +60,15 @@ El código actual no coincide completamente con este contrato: `CrearCategoriaDt
 - `ICategoriaService` orientado a capacidades del dominio.
 - `CategoriaService` para validación funcional, persistencia y mapeo.
 - Validator FluentValidation para requests.
-- `CategoriasController` limitado a HTTP y delegación.
+- `CategoriesController` limitado a HTTP y delegación.
 
 ## Estado actual de implementación
 
-- Existe `CategoriasController` con `GET`, `GET/{id}`, `POST`, `PUT/{id}` y `DELETE/{id}`.
-- Existe `CategoriasService` con consultas y persistencia mediante `CategoriaDbContext`.
+- Existe `CategoriesController` con `GET`, `GET/{id}`, `POST`, `PUT/{id}` y `DELETE/{id}`.
+- Existe `CategoryService` con consultas y persistencia mediante `CategoryDbContext`.
 - Existe el modelo `Categoria` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
 - Existen DTOs y un validator inicial, pero sus campos obligatorios no coinciden todavía con el contrato objetivo.
-- `ICategoriasService` y `CategoriaDbContext` están registrados en `Program.cs`; la conexión PostgreSQL se suministra por configuración.
+- `ICategoryService` y `CategoryDbContext` están registrados en `Program.cs`; la conexión PostgreSQL se suministra por configuración.
 - El controller devuelve `204 No Content` en actualización y eliminación, mientras el contrato documentado solicita `200 OK`.
 
 ## Impacto en datos e integraciones
@@ -84,7 +84,7 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 - `DELETE` desactiva la categoría sin borrar su registro físico.
 - El controller no contiene reglas de negocio ni acceso directo al contexto.
 - Los cambios se guardan mediante el service y la base de datos configurada.
-- El módulo conserva su código dentro de `Modules/Categorias`.
+- El módulo conserva su código dentro de `Modules/Categories`.
 - La persistencia está configurada y el endpoint completo se verifica contra una base de datos de desarrollo.
 
 ## Casos de prueba y verificación
@@ -111,7 +111,7 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 | --- | --- |
 | Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | `Modules/Categorias`, `Data/Configurations/CategoriaDb.cs` y `Program.cs` contienen la implementación parcial actual |
+| Archivos modificados | `Modules/Categories`, `Data/Configurations/CategoriaDb.cs` y `Program.cs` contienen la implementación parcial actual |
 | Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; endpoints aún no verificados |
 | Endpoints verificados | No verificados contra una instancia PostgreSQL disponible |
 | Responsable y fecha de implementación | Pendiente |
@@ -119,5 +119,5 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 ## Referencias
 
 - [`docs/System_Artifact.md`](../docs/System_Artifact.md), secciones 5.1, 7.1, 9, 11 y 15.
-- [`src/InventarioVentas.API/Modules/Categorias/README.md`](../src/InventarioVentas.API/Modules/Categorias/README.md).
+- [`src/InventarioVentas.API/Modules/Categories/README.md`](../src/InventarioVentas.API/Modules/Categories/README.md).
 - READMEs de `Controllers`, `DTOs`, `Interfaces`, `Services` y `Validators` de Categorías.

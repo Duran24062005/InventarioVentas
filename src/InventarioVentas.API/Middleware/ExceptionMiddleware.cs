@@ -24,18 +24,18 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            await ManejarExcepcionAsync(context, ex);
+            await HandleExceptionAsync(context, ex);
         }
     }
 
 
 
 
-    private static Task ManejarExcepcionAsync(HttpContext context, Exception excepcion)
+    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
 
-        var codigoEstado = excepcion switch
+        var statusCode = exception switch
         {
             NotFoundException => HttpStatusCode.NotFound,           // HTTP 404     https://http.cat/status/404
             BusinessException => HttpStatusCode.BadRequest,         // HTTP 400     https://http.cat/status/400
@@ -43,11 +43,11 @@ public class ExceptionMiddleware
             _ => HttpStatusCode.InternalServerError                 // HTTP 500     https://http.cat/status/500
         };
 
-        context.Response.StatusCode = (int)codigoEstado;
+        context.Response.StatusCode = (int)statusCode;
 
         var respuesta = new
         {
-            mensaje = excepcion.Message
+            mensaje = exception.Message
         };
 
 

@@ -92,54 +92,54 @@ creamos primero los módulos:
 
 ```bash
 mkdir Modules
-mkdir Modules/Categorias
-mkdir Modules/Productos
-mkdir Modules/Clientes
-mkdir Modules/Ventas
+mkdir Modules/Categories
+mkdir Modules/Products
+mkdir Modules/Customers
+mkdir Modules/Sales
 ```
 
 Categorías:
 
 ```bash
-mkdir Modules/Categorias/Controllers
-mkdir Modules/Categorias/DTOs
-mkdir Modules/Categorias/Interfaces
-mkdir Modules/Categorias/Models
-mkdir Modules/Categorias/Services
-mkdir Modules/Categorias/Validators
+mkdir Modules/Categories/Controllers
+mkdir Modules/Categories/DTOs
+mkdir Modules/Categories/Interfaces
+mkdir Modules/Categories/Models
+mkdir Modules/Categories/Services
+mkdir Modules/Categories/Validators
 ```
 
 Productos:
 
 ```bash
-mkdir Modules/Productos/Controllers
-mkdir Modules/Productos/DTOs
-mkdir Modules/Productos/Interfaces
-mkdir Modules/Productos/Models
-mkdir Modules/Productos/Services
-mkdir Modules/Productos/Validators
+mkdir Modules/Products/Controllers
+mkdir Modules/Products/DTOs
+mkdir Modules/Products/Interfaces
+mkdir Modules/Products/Models
+mkdir Modules/Products/Services
+mkdir Modules/Products/Validators
 ```
 
 Clientes:
 
 ```bash
-mkdir Modules/Clientes/Controllers
-mkdir Modules/Clientes/DTOs
-mkdir Modules/Clientes/Interfaces
-mkdir Modules/Clientes/Models
-mkdir Modules/Clientes/Services
-mkdir Modules/Clientes/Validators
+mkdir Modules/Customers/Controllers
+mkdir Modules/Customers/DTOs
+mkdir Modules/Customers/Interfaces
+mkdir Modules/Customers/Models
+mkdir Modules/Customers/Services
+mkdir Modules/Customers/Validators
 ```
 
 Ventas:
 
 ```bash
-mkdir Modules/Ventas/Controllers
-mkdir Modules/Ventas/DTOs
-mkdir Modules/Ventas/Interfaces
-mkdir Modules/Ventas/Models
-mkdir Modules/Ventas/Services
-mkdir Modules/Ventas/Validators
+mkdir Modules/Sales/Controllers
+mkdir Modules/Sales/DTOs
+mkdir Modules/Sales/Interfaces
+mkdir Modules/Sales/Models
+mkdir Modules/Sales/Services
+mkdir Modules/Sales/Validators
 ```
 
 Ahora las carpetas compartidas:
@@ -210,24 +210,24 @@ InventarioVentas/
 
 ### 7. Probar que el proyecto compile
 
-Antes de comenzar a programar:
+Desde la raíz del repositorio, la solución y el proyecto se validan así:
 
 ```bash
-dotnet restore
-dotnet build
+dotnet restore InventarioVentas.slnx
+dotnet build InventarioVentas.slnx --no-restore
 ```
 
-Luego:
+La raíz contiene la solución `InventarioVentas.slnx`, pero el archivo de proyecto está en `src/InventarioVentas.API/InventarioVentas.API.csproj`. Por eso `dotnet run` debe recibir explícitamente la ruta del proyecto:
 
 ```bash
-dotnet run
+dotnet run --project src/InventarioVentas.API/InventarioVentas.API.csproj
 ```
 
 Para ejecutar la API fuera de Docker, configura la conexión mediante User Secrets o una variable de entorno. Por ejemplo:
 
 ```bash
-dotnet user-secrets init
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=inventarioventas;Username=postgres;Password=<tu-password>"
+dotnet user-secrets init --project src/InventarioVentas.API/InventarioVentas.API.csproj
+dotnet user-secrets set --project src/InventarioVentas.API/InventarioVentas.API.csproj "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=inventarioventas;Username=postgres;Password=<tu-password>"
 ```
 
 La misma configuración puede suministrarse con la variable `ConnectionStrings__DefaultConnection`.

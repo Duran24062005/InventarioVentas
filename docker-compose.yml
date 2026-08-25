@@ -5,13 +5,13 @@ services:
       dockerfile: Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_HTTP_PORTS: 8080
+      ASPNETCORE_HTTP_PORTS: 5011
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=inventarioventas;Username=postgres;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting Compose}
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "8080:8080"
+      - "5011:5011"
 
   postgres:
     image: postgres:17-alpine

@@ -37,10 +37,10 @@ Fuera de alcance: entidades, base de datos, migraciones, autenticación, autoriz
 - `app.UseSwagger()` y `app.UseSwaggerUI()` se ejecutan únicamente en Development.
 - `app.UseHttpsRedirection()` mantiene el tráfico HTTP redirigido a HTTPS cuando existe un perfil HTTPS.
 - `app.MapControllers()` conecta los controllers al pipeline.
-- `builder.Services.AddScoped<ICategoriasService, CategoriasService>()` registra el servicio actual de Categorías.
+- `builder.Services.AddScoped<ICategoryService, CategoryService>()` registra el servicio actual de Categorías.
 - Se eliminó `Microsoft.AspNetCore.OpenApi` y no se usa `AddOpenApi`; Swashbuckle es la estrategia única de documentación.
 - La composición permanece en `Program.cs` mientras se termina de definir el registro por módulo.
-- `CategoriaDbContext` está registrado; los validadores y middleware todavía no están registrados en la composición.
+- `CategoryDbContext` está registrado; los validadores y middleware todavía no están registrados en la composición.
 - La separación entre composición y reglas de negocio queda preparada para los PRDs posteriores.
 
 ## Interfaces y contratos afectados
@@ -92,7 +92,7 @@ No modifica datos ni crea integraciones externas. Solo establece el punto de com
 | Commit o PR | `6170d3e chore: :twisted_rightwards_arrows: merge develop changes` |
 | Archivos de implementación | `src/InventarioVentas.API/Program.cs`, `src/InventarioVentas.API/InventarioVentas.API.csproj` |
 | Archivos de documentación | README raíz, `docs/`, README de la API, perfiles locales e `InventarioVentas.API.http` |
-| Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; `dotnet run` sin conexión falla con el mensaje esperado |
+| Pruebas ejecutadas | `dotnet restore InventarioVentas.slnx`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; `dotnet run --project src/InventarioVentas.API/InventarioVentas.API.csproj` sin conexión falla con el mensaje esperado |
 | Evidencia adicional | La composición registra el contexto provisional; el arranque funcional con PostgreSQL queda pendiente de una conexión disponible |
 | Responsable y fecha de implementación | Codex, 2026-08-25 |
 

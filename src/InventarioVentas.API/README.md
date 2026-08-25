@@ -17,6 +17,10 @@ Este es el unico proyecto de API de la solucion. Su responsabilidad es recibir s
 
 La API registra `AddControllers`, `AddEndpointsApiExplorer` y `AddSwaggerGen`. El pipeline aplica `UseHttpsRedirection` y mapea controllers con `MapControllers`.
 
+## Convención de nomenclatura
+
+Los namespaces, carpetas de módulos, archivos de código, clases, interfaces, métodos, variables y propiedades se nombran en inglés. Las rutas HTTP y las claves JSON existentes conservan sus nombres en español para evitar romper consumidores actuales; los DTOs usan `JsonPropertyName` para separar el nombre interno en inglés del contrato externo.
+
 Swagger UI y su especificacion JSON solo se habilitan en Development:
 
 - `http://localhost:5011/swagger`
@@ -31,9 +35,9 @@ Una solicitud entra por un controller de un modulo, se transforma mediante DTOs,
 
 Los modulos pueden colaborar cuando una regla lo exige, pero no deben acceder arbitrariamente a las carpetas internas de otro modulo. Si una dependencia entre modulos se vuelve compleja, documenta la decision antes de introducir una abstraccion nueva.
 
-Actualmente existe un CRUD inicial de Categorias conectado al `CategoriaDbContext` provisional y al proveedor PostgreSQL. Productos solo tiene piezas iniciales y Clientes/Ventas no tienen endpoints funcionales. El siguiente paso es implementar el dominio y la persistencia completa definidos en PRD-002 y PRD-003.
+Actualmente existe un CRUD inicial de Categorias conectado al `CategoryDbContext` provisional y al proveedor PostgreSQL. Productos solo tiene piezas iniciales y Clientes/Ventas no tienen endpoints funcionales. El siguiente paso es implementar el dominio y la persistencia completa definidos en PRD-002 y PRD-003.
 
-La ejecución actual falla durante `builder.Build()` porque `ICategoriasService` depende de `CategoriaDbContext` y ese contexto todavía no se registra en `Program.cs`. Esta incidencia debe resolverse junto con la persistencia; no se debe ocultar deshabilitando el service de Categorías.
+La ejecución requiere `ConnectionStrings:DefaultConnection`, que puede suministrarse mediante User Secrets, una variable de entorno o Docker Compose. `CategoryDbContext` ya está registrado en `Program.cs`; el contexto actual es provisional y debe integrarse en el `AppDbContext` completo al cerrar PRD-003.
 
 ## Antes de modificar
 
