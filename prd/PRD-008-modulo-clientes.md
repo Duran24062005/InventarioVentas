@@ -5,7 +5,7 @@
 | Estado | Propuesto |
 | Prioridad | Alta |
 | Dependencias | PRD-002 y PRD-005 |
-| Módulo propietario | `Modules/Clientes` |
+| Módulo propietario | `Modules/Customers` |
 | Historias relacionadas | HU04 |
 
 ## Problema y objetivo
@@ -107,5 +107,5 @@ Usa la entidad y el índice único de documento definidos en PRD-002 y PRD-003. 
 ## Referencias
 
 - [`docs/System_Artifact.md`](../docs/System_Artifact.md), secciones 5.3, 6.1, 7.3, 9, 11 y 15.
-- [`src/InventarioVentas.API/Modules/Clientes/README.md`](../src/InventarioVentas.API/Modules/Clientes/README.md).
+- [`src/InventarioVentas.API/Modules/Customers/README.md`](../src/InventarioVentas.API/Modules/Customers/README.md).
 - READMEs de `Controllers`, `DTOs`, `Interfaces`, `Services` y `Validators` de Clientes.

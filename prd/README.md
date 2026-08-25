@@ -10,9 +10,9 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 | Rama | `main` |
 | SDK .NET | `10.0.111` |
 | Compilación | Exitosa: 0 errores, 0 advertencias |
-| Arranque actual | Requiere `ConnectionStrings:DefaultConnection`; el `CategoriaDbContext` provisional ya está registrado |
+| Arranque actual | Requiere `ConnectionStrings:DefaultConnection`; el `CategoryDbContext` provisional ya está registrado |
 | Implementación funcional | Categorías parcial; Productos en esqueleto; Clientes y Ventas pendientes |
-| Persistencia | `Categoria` y `CategoriaDbContext` parciales; sin `AppDbContext`, conexión ni migraciones |
+| Persistencia | `Categoria` y `CategoryDbContext` parciales; sin `AppDbContext`, conexión ni migraciones |
 | Pruebas funcionales | No implementadas |
 
 ## Mapa de PRDs

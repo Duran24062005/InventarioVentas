@@ -5,7 +5,7 @@
 | Estado | Propuesto |
 | Prioridad | Crítica |
 | Dependencias | PRD-007 y PRD-008 |
-| Módulo propietario | `Modules/Ventas` |
+| Módulo propietario | `Modules/Sales` |
 | Historias relacionadas | HU04 |
 
 ## Problema y objetivo
@@ -153,6 +153,6 @@ Relaciona Clientes, Productos, Ventas y DetalleVenta. El módulo consume capacid
 ## Referencias
 
 - [`docs/System_Artifact.md`](../docs/System_Artifact.md), secciones 5.4, 5.5, 6.3, 7.4, 9, 11, 15 y 16.
-- [`src/InventarioVentas.API/Modules/Ventas/README.md`](../src/InventarioVentas.API/Modules/Ventas/README.md).
-- [`src/InventarioVentas.API/Modules/Productos/README.md`](../src/InventarioVentas.API/Modules/Productos/README.md).
-- [`src/InventarioVentas.API/Modules/Clientes/README.md`](../src/InventarioVentas.API/Modules/Clientes/README.md).
+- [`src/InventarioVentas.API/Modules/Sales/README.md`](../src/InventarioVentas.API/Modules/Sales/README.md).
+- [`src/InventarioVentas.API/Modules/Products/README.md`](../src/InventarioVentas.API/Modules/Products/README.md).
+- [`src/InventarioVentas.API/Modules/Customers/README.md`](../src/InventarioVentas.API/Modules/Customers/README.md).

@@ -70,7 +70,7 @@ Este modelo será la fuente para las tablas, claves, índices, relaciones y prec
 
 ## Estado actual de implementación
 
-- Existe `Modules/Categorias/Models/Categorias.cs` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
+- Existe `Modules/Categories/Models/Categorias.cs` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
 - No existen todavía las entidades `Producto`, `Cliente`, `Venta` ni `DetalleVenta`.
 - La entidad provisional usa `Guid`, mientras los DTOs iniciales de Productos usan `int CategoriaId`; esta decisión debe resolverse antes de configurar las relaciones.
 - Los DTOs de Categorías mezclan campos controlados por backend con datos de entrada, por lo que no representan todavía el contrato definitivo del dominio.
@@ -107,7 +107,7 @@ Este modelo será la fuente para las tablas, claves, índices, relaciones y prec
 | --- | --- |
 | Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | `src/InventarioVentas.API/Modules/Categorias/Models/Categorias.cs` contiene la entidad parcial actual |
+| Archivos modificados | `src/InventarioVentas.API/Modules/Categories/Models/Categorias.cs` contiene la entidad parcial actual |
 | Pruebas ejecutadas | Revisión estática; no hay pruebas de modelo ni de persistencia |
 | Evidencia adicional | Faltan cuatro entidades y debe resolverse la incompatibilidad `Guid`/`int` antes de PRD-003 |
 | Responsable y fecha de implementación | Pendiente |

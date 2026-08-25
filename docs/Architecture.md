@@ -18,11 +18,11 @@ InventarioVentas/
         │   │
         │   ├── Categorias/
         │   │   ├── Controllers/
-        │   │   │   └── CategoriasController.cs
+        │   │   │   └── CategoriesController.cs
         │   │   │
         │   │   ├── DTOs/
-        │   │   │   ├── CrearCategoriaDto.cs
-        │   │   │   ├── ActualizarCategoriaDto.cs
+        │   │   │   ├── CreateCategoryDto.cs
+        │   │   │   ├── UpdateCategoryDto.cs
         │   │   │   └── CategoriaResponseDto.cs
         │   │   │
         │   │   ├── Models/
@@ -35,28 +35,28 @@ InventarioVentas/
         │   │   │   └── CategoriaService.cs
         │   │   │
         │   │   └── Validators/
-        │   │       └── CrearCategoriaValidator.cs
+        │   │       └── CreateCategoryValidator.cs
         │   │
         │   ├── Productos/
         │   │   ├── Controllers/
         │   │   │   └── ProductosController.cs
         │   │   │
         │   │   ├── DTOs/
-        │   │   │   ├── CrearProductoDto.cs
+        │   │   │   ├── CreateProductDto.cs
         │   │   │   ├── ActualizarProductoDto.cs
-        │   │   │   └── ProductoResponseDto.cs
+        │   │   │   └── ProductResponseDto.cs
         │   │   │
         │   │   ├── Models/
         │   │   │   └── Producto.cs
         │   │   │
         │   │   ├── Interfaces/
-        │   │   │   └── IProductoService.cs
+        │   │   │   └── IProductService.cs
         │   │   │
         │   │   ├── Services/
-        │   │   │   └── ProductoService.cs
+        │   │   │   └── ProductService.cs
         │   │   │
         │   │   └── Validators/
-        │   │       └── CrearProductoValidator.cs
+        │   │       └── CreateProductValidator.cs
         │   │
         │   ├── Clientes/
         │   │   ├── Controllers/
@@ -213,14 +213,14 @@ Esto funciona, pero cuando el proyecto crece empieza a quedar así:
 
 ```text
 Controllers/
-├── CategoriasController.cs
+├── CategoriesController.cs
 ├── ProductosController.cs
 ├── ClientesController.cs
 └── VentasController.cs
 
 Services/
 ├── CategoriaService.cs
-├── ProductoService.cs
+├── ProductService.cs
 ├── ClienteService.cs
 └── VentaService.cs
 
@@ -262,11 +262,11 @@ Quedaría:
 Modules/
 └── Categorias/
     ├── Controllers/
-    │   └── CategoriasController.cs
+    │   └── CategoriesController.cs
     │
     ├── DTOs/
-    │   ├── CrearCategoriaDto.cs
-    │   ├── ActualizarCategoriaDto.cs
+    │   ├── CreateCategoryDto.cs
+    │   ├── UpdateCategoryDto.cs
     │   └── CategoriaResponseDto.cs
     │
     ├── Models/
@@ -279,7 +279,7 @@ Modules/
     │   └── CategoriaService.cs
     │
     └── Validators/
-        └── CrearCategoriaValidator.cs
+        └── CreateCategoryValidator.cs
 ```
 
 La entidad:
@@ -328,21 +328,21 @@ Modules/
     │   └── ProductosController.cs
     │
     ├── DTOs/
-    │   ├── CrearProductoDto.cs
+    │   ├── CreateProductDto.cs
     │   ├── ActualizarProductoDto.cs
-    │   └── ProductoResponseDto.cs
+    │   └── ProductResponseDto.cs
     │
     ├── Models/
     │   └── Producto.cs
     │
     ├── Interfaces/
-    │   └── IProductoService.cs
+    │   └── IProductService.cs
     │
     ├── Services/
-    │   └── ProductoService.cs
+    │   └── ProductService.cs
     │
     └── Validators/
-        └── CrearProductoValidator.cs
+        └── CreateProductValidator.cs
 ```
 
 Entidad:
@@ -372,7 +372,7 @@ Stock >= 0
 CategoriaId obligatorio
 ```
 
-Mientras que `ProductoService` valida cosas que necesitan consultar la base de datos:
+Mientras que `ProductService` valida cosas que necesitan consultar la base de datos:
 
 ```text
 ¿Existe la categoría?
@@ -620,7 +620,7 @@ Representa lo que entra o sale de la API.
 Por ejemplo:
 
 ```text
-CrearProductoDto
+CreateProductDto
 ```
 
 podría contener:
@@ -649,7 +649,7 @@ Aquí está la lógica de negocio.
 Por ejemplo:
 
 ```text
-ProductoService
+ProductService
 ```
 
 realiza:
@@ -668,7 +668,7 @@ Eliminar/desactivar producto
 Define el contrato.
 
 ```text
-IProductoService
+IProductService
 ```
 
 Por ejemplo conceptualmente:
@@ -684,7 +684,7 @@ EliminarAsync(...)
 Y después:
 
 ```text
-ProductoService
+ProductService
 ```
 
 implementa esa interfaz.
@@ -708,7 +708,7 @@ Se encarga principalmente de validar los DTO.
 Por ejemplo:
 
 ```text
-CrearProductoValidator
+CreateProductValidator
 
 Precio > 0
 Stock >= 0
@@ -946,7 +946,7 @@ pueden registrar:
 ```text
 ICategoriaService → CategoriaService
 
-IProductoService → ProductoService
+IProductService → ProductService
 
 IClienteService → ClienteService
 
@@ -961,10 +961,10 @@ Por ejemplo:
 ProductosController
         │
         ▼
-IProductoService
+IProductService
         │
         ▼
-ProductoService
+ProductService
 ```
 
 Esto cumple perfectamente el criterio:
@@ -1196,7 +1196,7 @@ InventarioVentas.API
 
 Y **no agregaría Clean Architecture, CQRS, MediatR, Unit of Work, Repository Pattern ni varios proyectos `.csproj` todavía**. Para el objetivo que tienen, eso les puede hacer gastar más tiempo entendiendo infraestructura que aprendiendo ASP.NET Core.
 
-El siguiente paso natural sería definir **qué debe contener cada archivo** (`Categoria.cs`, `CrearProductoDto.cs`, `IProductoService.cs`, `ProductoService.cs`, `ProductosController.cs`, `AppDbContext.cs`, etc.) y con eso ya tendrían prácticamente el esqueleto completo para empezar a programar.
+El siguiente paso natural sería definir **qué debe contener cada archivo** (`Categoria.cs`, `CreateProductDto.cs`, `IProductService.cs`, `ProductService.cs`, `ProductosController.cs`, `AppDbContext.cs`, etc.) y con eso ya tendrían prácticamente el esqueleto completo para empezar a programar.
 
 ## Composición técnica implementada
 

@@ -6,7 +6,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 - [x] La solución compila con .NET 10: `dotnet build InventarioVentas.slnx --no-restore` termina con 0 errores y 0 advertencias.
 - [x] La API tiene composición inicial, Swagger y Docker multi-stage.
-- [x] Categorías tiene un CRUD parcial con controller, DTOs, service, validator y `CategoriaDbContext` provisional.
+- [x] Categorías tiene un CRUD parcial con controller, DTOs, service, validator y `CategoryDbContext` provisional.
 - [x] Productos tiene DTOs, contrato de service, service vacío y validator inicial.
 - [ ] La API arranca correctamente.
 - [ ] Existe un `AppDbContext` completo y una conexión a PostgreSQL.
@@ -14,7 +14,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 ### Bloqueo inmediato
 
-`CategoriasService` recibe `CategoriaDbContext` y ambos servicios ya están registrados en DI. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, `Program.cs` falla con un mensaje claro indicando que PostgreSQL necesita esa configuración. El contexto sigue siendo provisional y debe integrarse en el `AppDbContext` completo.
+`CategoryService` recibe `CategoryDbContext` y ambos servicios ya están registrados en DI. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, `Program.cs` falla con un mensaje claro indicando que PostgreSQL necesita esa configuración. El contexto sigue siendo provisional y debe integrarse en el `AppDbContext` completo.
 
 ## Paso a paso pendiente
 
@@ -31,13 +31,13 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 ### 2. Unificar la persistencia — PRD-003
 
-- [ ] Reemplazar o integrar `CategoriaDbContext` dentro de un único `AppDbContext` en `Data`.
+- [ ] Reemplazar o integrar `CategoryDbContext` dentro de un único `AppDbContext` en `Data`.
 - [ ] Agregar los cinco `DbSet` esperados.
 - [ ] Crear una configuración EF Core por entidad.
 - [ ] Configurar claves, relaciones, nulabilidad, longitudes e índices únicos.
 - [ ] Configurar precisión explícita para `Precio`, `PrecioUnitario`, `Subtotal` y `Total`.
 - [ ] Registrar el contexto en DI desde `Program.cs` o una extensión propietaria.
-- [ ] Confirmar que `CategoriasService` use el contexto definitivo.
+- [ ] Confirmar que `CategoryService` use el contexto definitivo.
 
 **Salida:** `dotnet build` pasa y `AppDbContext` puede resolverse desde DI.
 
@@ -80,7 +80,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 - [ ] Crear la entidad `Producto` y su configuración EF Core.
 - [ ] Crear `ProductosController`.
-- [ ] Completar `ProductoService` y registrar `IProductoService`.
+- [ ] Completar `ProductService` y registrar `IProductService`.
 - [ ] Implementar unicidad de código y existencia/estado de categoría.
 - [ ] Implementar creación, consulta, actualización y desactivación.
 - [ ] Definir qué ocurre con precio y stock después de una venta.

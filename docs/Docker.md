@@ -4,7 +4,7 @@ InventarioVentas puede ejecutarse como un contenedor de la API. La imagen usa un
 
 ## Alcance actual
 
-Compose contiene la API y un servicio PostgreSQL para desarrollo. Existe un `CategoriaDbContext` provisional y todavía no hay `AppDbContext` completo ni migraciones; por eso el esquema definitivo se incorporará cuando se complete PRD-003 y PRD-004.
+Compose contiene la API y un servicio PostgreSQL para desarrollo. Existe un `CategoryDbContext` provisional y todavía no hay `AppDbContext` completo ni migraciones; por eso el esquema definitivo se incorporará cuando se complete PRD-003 y PRD-004.
 
 ## Requisitos
 
@@ -51,13 +51,15 @@ También puedes definirla solo para un comando:
 POSTGRES_PASSWORD='<tu-password-local>' docker compose up -d
 ```
 
-Para no repetir el `export`, crea un archivo `.env` en la raíz del proyecto:
+El proyecto incluye un archivo `.env` local en la raíz. Edita su valor antes de iniciar los servicios:
 
 ```dotenv
 POSTGRES_PASSWORD=tu-password-local
 ```
 
-Docker Compose carga automáticamente `.env` desde esa ubicación. El archivo ya está excluido por `.gitignore`; no lo subas al repositorio porque contiene una credencial local.
+Docker Compose carga automáticamente `.env` desde esa ubicación, por lo que ya no necesitas ejecutar `export POSTGRES_PASSWORD=...`. El archivo está excluido por `.gitignore`; no lo subas al repositorio porque contiene una credencial local.
+
+Nota: `.env` lo carga Docker Compose, no `dotnet run` ni `dotnet watch`. Si ejecutas la API localmente con Hot Reload, configura la conexión mediante User Secrets o `ConnectionStrings__DefaultConnection`.
 
 Si necesitas reconstruir la imagen después de un cambio de código, usa:
 

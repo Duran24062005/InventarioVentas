@@ -1,7 +1,7 @@
 using InventarioVentas.API.Data;
 using InventarioVentas.API.Data.Configurations;
-using InventarioVentas.API.Modules.Categorias.Interfaces;
-using InventarioVentas.API.Modules.Categorias.Services;
+using InventarioVentas.API.Modules.Categories.Interfaces;
+using InventarioVentas.API.Modules.Categories.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -20,7 +20,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddDbContext<CategoriaDbContext>(options =>
+builder.Services.AddDbContext<CategoryDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // Add services DbContext
@@ -28,7 +28,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
         
 
-builder.Services.AddScoped<ICategoriasService, CategoriasService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
