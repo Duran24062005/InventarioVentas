@@ -30,11 +30,39 @@ El `Dockerfile` copia primero el `.csproj` para aprovechar la caché de restaura
 
 ## Ejecutar con Docker Compose
 
-Antes de iniciar los servicios, define la contraseña fuera del repositorio:
+### Configurar la contraseña de PostgreSQL
+
+`docker-compose.yml` exige la variable `POSTGRES_PASSWORD`. Si ejecutas `docker compose up -d` sin definirla, Compose detiene el proceso antes de crear los contenedores y muestra un error similar a:
+
+```text
+required variable POSTGRES_PASSWORD is missing a value
+```
+
+La opción recomendada para la sesión actual de la terminal es:
 
 ```bash
 export POSTGRES_PASSWORD='<tu-password-local>'
-docker compose up --build
+docker compose up -d
+```
+
+También puedes definirla solo para un comando:
+
+```bash
+POSTGRES_PASSWORD='<tu-password-local>' docker compose up -d
+```
+
+Para no repetir el `export`, crea un archivo `.env` en la raíz del proyecto:
+
+```dotenv
+POSTGRES_PASSWORD=tu-password-local
+```
+
+Docker Compose carga automáticamente `.env` desde esa ubicación. El archivo ya está excluido por `.gitignore`; no lo subas al repositorio porque contiene una credencial local.
+
+Si necesitas reconstruir la imagen después de un cambio de código, usa:
+
+```bash
+docker compose up -d --build
 ```
 
 Cuando la composición de dependencias esté completa, la API quedará disponible en:
