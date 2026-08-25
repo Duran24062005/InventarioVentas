@@ -24,13 +24,15 @@ public class ProductConfiguration : IEntityTypeConfiguration<Producto>
             .IsRequired()
             .HasMaxLength(50);
 
+// Índice único obligatorio para el código de producto (PRD-003)
 
         builder.HasIndex(p => p.Codigo)
             .IsUnique();
 
 
         builder.Property(p => p.Precio)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("numeric(18,2)")
+            .IsRequired();
 
 
         builder.Property(p => p.Stock)
