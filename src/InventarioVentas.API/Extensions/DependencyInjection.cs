@@ -1,7 +1,7 @@
 using InventarioVentas.API.Data;
 using InventarioVentas.API.Data.Configurations;
-using InventarioVentas.API.Modules.Categorias.Interfaces;
-using InventarioVentas.API.Modules.Categorias.Services;
+using InventarioVentas.API.Modules.Categories.Interfaces;
+using InventarioVentas.API.Modules.Categories.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventarioVentas.API.Extensions;
@@ -23,10 +23,10 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        services.AddDbContext<CategoriaDbContext>(options =>
+        services.AddDbContext<CategoryDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        services.AddScoped<ICategoriasService, CategoriasService>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

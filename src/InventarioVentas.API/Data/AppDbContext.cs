@@ -1,9 +1,8 @@
 namespace InventarioVentas.API.Data;
 
 using Microsoft.EntityFrameworkCore;
-using InventarioVentas.API.Modules.Categorias.Models;
-using InventarioVentas.API.Modules.Productos.Models;
-
+using InventarioVentas.API.Modules.Categories.Models;
+using InventarioVentas.API.Modules.Products.Models;
 
 
 public class AppDbContext : DbContext
@@ -12,16 +11,15 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Categoria> Categorias => Set<Categoria>();
-    public DbSet<Producto> Productos => Set<Producto>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Product> Products => Set<Product>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // Se registra automaticamente todas las configuraciones Fluent API
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
 
