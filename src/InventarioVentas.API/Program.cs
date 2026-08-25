@@ -24,6 +24,8 @@ if (string.IsNullOrWhiteSpace(connectionString))
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddDbContext<CategoryDbContext>(options =>
     options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<CustomerDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // Add services DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
