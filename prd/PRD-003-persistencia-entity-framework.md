@@ -62,9 +62,9 @@ El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones n
 
 ## Estado actual de implementación
 
-- Existe `Data/Configurations/CategoriaDb.cs` con un `CategoryDbContext` y un único `DbSet<Categoria>`.
+- Existe `Data/Configurations/CategoryDbContext.cs` con un `CategoryDbContext` y un único `DbSet<Category>` llamado `Categories`.
 - `CategoryService` depende de ese contexto para ejecutar un CRUD inicial.
-- No existen todavía `AppDbContext`, las entidades completas del dominio ni las cinco configuraciones esperadas.
+- Existe un `AppDbContext` inicial con `Category` y `Product`, pero todavía no contiene las entidades completas del dominio ni las cinco configuraciones esperadas.
 - `Program.cs` registra `ICategoryService` y `CategoryDbContext` mediante `UseNpgsql`.
 - `appsettings.json` declara `ConnectionStrings:DefaultConnection` sin valor; el valor real debe llegar desde User Secrets, variables de entorno o Compose.
 
@@ -107,7 +107,7 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 | --- | --- |
 | Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoriaDb.cs` y `src/InventarioVentas.API/Modules/Categories/Services/CategoryService.cs` contienen la implementación parcial actual |
+| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoryDbContext.cs`, `src/InventarioVentas.API/Data/AppDbContext.cs`, `src/InventarioVentas.API/Data/Configurations/ProductConfiguration.cs` y `src/InventarioVentas.API/Modules/Categories/Services/CategoryService.cs` contienen la implementación parcial actual |
 | Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque sin conexión falla con el mensaje esperado |
 | Evidencia adicional | La implementación parcial no cumple aún el contrato de cinco entidades, relaciones, índices y precisión decimal |
 | Responsable y fecha de implementación | Pendiente |
