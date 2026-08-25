@@ -4,7 +4,7 @@ InventarioVentas puede ejecutarse como un contenedor de la API. La imagen usa un
 
 ## Alcance actual
 
-La configuración actual contiene únicamente la API. Existe un `CategoriaDbContext` provisional, pero todavía no hay `AppDbContext`, cadena de conexión, migraciones ni un contenedor de SQL Server. La base de datos se incorporará cuando se implementen PRD-003 y PRD-004.
+Compose contiene la API y un servicio PostgreSQL para desarrollo. Existe un `CategoriaDbContext` provisional y todavía no hay `AppDbContext` completo ni migraciones; por eso el esquema definitivo se incorporará cuando se complete PRD-003 y PRD-004.
 
 ## Requisitos
 
@@ -30,7 +30,10 @@ El `Dockerfile` copia primero el `.csproj` para aprovechar la caché de restaura
 
 ## Ejecutar con Docker Compose
 
+Antes de iniciar los servicios, define la contraseña fuera del repositorio:
+
 ```bash
+export POSTGRES_PASSWORD='<tu-password-local>'
 docker compose up --build
 ```
 
@@ -39,11 +42,13 @@ Cuando la composición de dependencias esté completa, la API quedará disponibl
 - Swagger UI: <http://localhost:8080/swagger>
 - Especificación JSON: <http://localhost:8080/swagger/v1/swagger.json>
 
-Detener y eliminar el contenedor:
+Detener los servicios:
 
 ```bash
 docker compose down
 ```
+
+Para eliminar también los datos locales de PostgreSQL, usa `docker compose down --volumes`.
 
 ## Ejecutar la imagen directamente
 
@@ -51,6 +56,7 @@ docker compose down
 docker run --rm \
   --publish 8080:8080 \
   --env ASPNETCORE_ENVIRONMENT=Development \
+  --env ConnectionStrings__DefaultConnection="Host=<postgres-host>;Port=5432;Database=inventarioventas;Username=postgres;Password=<tu-password>" \
   inventarioventas-api:dev
 ```
 
@@ -58,8 +64,9 @@ La imagen escucha en el puerto interno `8080`, definido mediante `ASPNETCORE_HTT
 
 ## Configuración y seguridad
 
-- `docker-compose.yml` está orientado a desarrollo y establece `ASPNETCORE_ENVIRONMENT=Development` para habilitar Swagger.
-- No se deben agregar connection strings, contraseñas, tokens ni certificados al `Dockerfile`, `.dockerignore` o `docker-compose.yml`.
+- `docker-compose.yml` está orientado a desarrollo, establece `ASPNETCORE_ENVIRONMENT=Development` y espera `POSTGRES_PASSWORD` desde el entorno.
+- La API recibe `ConnectionStrings__DefaultConnection` apuntando al host Compose `postgres`.
+- No se deben agregar connection strings completas, contraseñas, tokens ni certificados al `Dockerfile` o `.dockerignore`; Compose solo debe construir la conexión mediante variables externas.
 - El contenedor actual expone HTTP; HTTPS y certificados deben resolverse en un reverse proxy o en una configuración de despliegue posterior.
 - Para producción se debe usar `ASPNETCORE_ENVIRONMENT=Production`, una configuración de secretos externa y una política explícita de exposición de Swagger.
 - `.dockerignore` excluye artefactos de compilación, documentación y metadatos del repositorio del contexto de build.
@@ -71,7 +78,7 @@ docker compose ps
 docker compose logs -f api
 ```
 
-Si el puerto `8080` está ocupado, cambia el lado izquierdo de `8080:8080` en `docker-compose.yml`; el puerto interno debe permanecer en `8080` salvo que también se actualice `ASPNETCORE_HTTP_PORTS`.
+Si el puerto `8080` está ocupado, cambia el lado izquierdo de `8080:8080`. Si el puerto `5432` está ocupado, define `POSTGRES_PORT` con otro puerto; el puerto interno de PostgreSQL permanece en `5432`.
 
 ## Referencias
 

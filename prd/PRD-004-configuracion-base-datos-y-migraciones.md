@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El proyecto tiene el paquete de SQL Server y las herramientas de EF Core, pero no tiene una cadena de conexión, una migración inicial ni un procedimiento reproducible para crear la base de datos. Este PRD define cómo preparar y versionar la infraestructura local de persistencia sin guardar secretos.
+El proyecto tiene el proveedor de PostgreSQL y las herramientas de EF Core, pero no tiene una migración inicial ni un procedimiento reproducible para crear el esquema completo. Este PRD define cómo preparar y versionar la infraestructura local de persistencia sin guardar secretos.
 
 ## Alcance
 
@@ -27,7 +27,7 @@ Fuera de alcance: despliegue productivo, backups, alta disponibilidad, CI/CD, da
 La secuencia de trabajo será:
 
 1. Confirmar que PRD-002 y PRD-003 están aceptados.
-2. Configurar una conexión local a SQL Server sin escribir credenciales en archivos versionados.
+2. Configurar una conexión local a PostgreSQL sin escribir credenciales en archivos versionados.
 3. Ejecutar `dotnet ef migrations add InitialCreate` desde el proyecto API.
 4. Revisar la migración generada contra el modelo esperado.
 5. Ejecutar `dotnet ef database update` sobre una base de datos de desarrollo.
@@ -38,7 +38,7 @@ Los comandos definitivos deben quedar alineados con `docs/project_configuration_
 ## Contratos de configuración
 
 - Clave: `ConnectionStrings:DefaultConnection`.
-- Motor objetivo: SQL Server.
+- Motor objetivo: PostgreSQL mediante `Npgsql.EntityFrameworkCore.PostgreSQL`.
 - La API debe fallar de forma clara si necesita persistencia y la conexión no está configurada.
 - `appsettings.json` puede conservar la estructura de configuración, pero no debe contener secretos reales.
 
@@ -51,7 +51,7 @@ Los comandos definitivos deben quedar alineados con `docs/project_configuration_
 
 ## Impacto en datos e integraciones
 
-Se crea el esquema inicial de SQL Server con tablas, relaciones, índices y precisión definidos en PRD-003. La migración es un artefacto de infraestructura y no debe contener lógica de negocio.
+Se crea el esquema inicial de PostgreSQL con tablas, relaciones, índices y precisión definidos en PRD-003. La migración es un artefacto de infraestructura y no debe contener lógica de negocio.
 
 ## Criterios de aceptación
 
@@ -71,12 +71,12 @@ Se crea el esquema inicial de SQL Server con tablas, relaciones, índices y prec
 | Aplicar migraciones a una base vacía | Proceso exitoso y esquema creado. |
 | Ejecutar el comando sin conexión configurada | Error claro y accionable. |
 | Revisar archivos versionados | No contienen secretos. |
-| Consultar índices y claves en SQL Server | Coinciden con PRD-003. |
+| Consultar índices y claves en PostgreSQL | Coinciden con PRD-003. |
 | Ejecutar la API con una conexión válida | Arranque exitoso. |
 
 ## Riesgos y decisiones pendientes
 
-- La disponibilidad de SQL Server local o de una instancia de desarrollo debe confirmarse antes de ejecutar la migración.
+- La disponibilidad de PostgreSQL local o de una instancia de desarrollo debe confirmarse antes de ejecutar la migración.
 - No se deben usar credenciales compartidas en la documentación.
 - La estrategia de datos semilla queda fuera del alcance inicial y solo se agregará si existe una necesidad documentada.
 

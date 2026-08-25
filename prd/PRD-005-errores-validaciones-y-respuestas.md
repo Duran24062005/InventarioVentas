@@ -103,7 +103,7 @@ No cambia el esquema de datos. Afecta el contrato HTTP de todos los módulos y e
 | Rama | `main` |
 | Commit o PR | Pendiente |
 | Archivos modificados | `src/InventarioVentas.API/Common`, `src/InventarioVentas.API/Middleware` y validators iniciales de Categorías y Productos |
-| Pruebas ejecutadas | Revisión estática; no hay pruebas funcionales y la API no arranca por DI |
+| Pruebas ejecutadas | Revisión estática; no hay pruebas funcionales y el arranque requiere una conexión PostgreSQL configurada |
 | Contrato HTTP verificado | Pendiente; middleware y validadores aún no están conectados |
 | Responsable y fecha de implementación | Pendiente |
 

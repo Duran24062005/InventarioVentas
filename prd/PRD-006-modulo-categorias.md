@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial, pero todavía no está conectado a un `DbContext` registrado ni cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
+Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial conectado al `CategoriaDbContext` provisional, pero todavía no cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
 
 ## Alcance
 
@@ -68,7 +68,7 @@ El código actual no coincide completamente con este contrato: `CrearCategoriaDt
 - Existe `CategoriasService` con consultas y persistencia mediante `CategoriaDbContext`.
 - Existe el modelo `Categoria` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
 - Existen DTOs y un validator inicial, pero sus campos obligatorios no coinciden todavía con el contrato objetivo.
-- `ICategoriasService` está registrado en `Program.cs`; `CategoriaDbContext` no, por lo que la API no arranca.
+- `ICategoriasService` y `CategoriaDbContext` están registrados en `Program.cs`; la conexión PostgreSQL se suministra por configuración.
 - El controller devuelve `204 No Content` en actualización y eliminación, mientras el contrato documentado solicita `200 OK`.
 
 ## Impacto en datos e integraciones
@@ -112,8 +112,8 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 | Rama | `main` |
 | Commit o PR | Pendiente |
 | Archivos modificados | `Modules/Categorias`, `Data/Configurations/CategoriaDb.cs` y `Program.cs` contienen la implementación parcial actual |
-| Pruebas ejecutadas | `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; ejecución bloqueada por `CategoriaDbContext` no registrado |
-| Endpoints verificados | No verificados; el host no llega a exponer Swagger ni las rutas de Categorías |
+| Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; endpoints aún no verificados |
+| Endpoints verificados | No verificados contra una instancia PostgreSQL disponible |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

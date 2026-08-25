@@ -31,7 +31,7 @@ Una solicitud entra por un controller de un modulo, se transforma mediante DTOs,
 
 Los modulos pueden colaborar cuando una regla lo exige, pero no deben acceder arbitrariamente a las carpetas internas de otro modulo. Si una dependencia entre modulos se vuelve compleja, documenta la decision antes de introducir una abstraccion nueva.
 
-Actualmente existe un CRUD inicial de Categorias, aunque no puede ejecutarse hasta registrar `CategoriaDbContext`. Productos solo tiene piezas iniciales y Clientes/Ventas no tienen endpoints funcionales. El siguiente paso es implementar el dominio y la persistencia definidos en PRD-002 y PRD-003.
+Actualmente existe un CRUD inicial de Categorias conectado al `CategoriaDbContext` provisional y al proveedor PostgreSQL. Productos solo tiene piezas iniciales y Clientes/Ventas no tienen endpoints funcionales. El siguiente paso es implementar el dominio y la persistencia completa definidos en PRD-002 y PRD-003.
 
 La ejecución actual falla durante `builder.Build()` porque `ICategoriasService` depende de `CategoriaDbContext` y ese contexto todavía no se registra en `Program.cs`. Esta incidencia debe resolverse junto con la persistencia; no se debe ocultar deshabilitando el service de Categorías.
 

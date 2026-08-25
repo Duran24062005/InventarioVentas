@@ -182,7 +182,7 @@ Cliente HTTP ──►│  ┌────────────────�
                             │
                             ▼
                     ┌───────────────┐
-                    │  SQL Server   │
+                    │ PostgreSQL    │
                     └───────────────┘
 ```
 
@@ -553,7 +553,7 @@ VentaService
         └── 12. SaveChangesAsync()
                     │
                     ▼
-               SQL Server
+               PostgreSQL
 ```
 
 Aquí es donde se cumple el criterio:
@@ -594,7 +594,7 @@ Service
 DbContext
  │
  ▼
-SQL Server
+PostgreSQL
 ```
 
 ### Controller
@@ -753,7 +753,7 @@ AppDbContext
 └── DetallesVenta
         │
         ▼
-    SQL Server
+    PostgreSQL
 ```
 
 ---
@@ -899,7 +899,7 @@ Repository
    ↓
 DbContext
    ↓
-SQL Server
+PostgreSQL
 ```
 
 sin obtener un beneficio importante para un proyecto pequeño.
@@ -913,7 +913,7 @@ Service
      ↓
 AppDbContext
      ↓
-SQL Server
+PostgreSQL
 ```
 
 Eso les permite aprender mejor:
@@ -1126,7 +1126,7 @@ Service
    ↓
 DbContext
    ↓
-SQL Server
+PostgreSQL
 ```
 
 Porque ese flujo es justamente lo que probablemente les van a evaluar.
@@ -1210,4 +1210,4 @@ La API ya no expone el endpoint de ejemplo `weatherforecast`. Mientras no exista
 
 La API puede empaquetarse en una imagen multi-stage con `Dockerfile` y ejecutarse mediante el servicio `api` de `docker-compose.yml`. Esto conserva el modelo de una sola API y un solo despliegue lógico; Docker solo cambia la forma de ejecutar el proceso.
 
-La configuración actual es de desarrollo y no agrega SQL Server porque la persistencia todavía pertenece a PRD-003 y PRD-004. Los detalles de puertos, ambiente y seguridad están en [`docs/Docker.md`](Docker.md).
+La configuración actual es de desarrollo y agrega PostgreSQL mediante Compose; el esquema completo y las migraciones todavía pertenecen a PRD-003 y PRD-004. Los detalles de puertos, ambiente y seguridad están en [`docs/Docker.md`](Docker.md).

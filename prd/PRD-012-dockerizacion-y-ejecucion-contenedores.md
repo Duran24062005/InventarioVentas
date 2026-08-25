@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El proyecto tiene una imagen Docker multi-stage y una configuración Docker Compose para desarrollo. La infraestructura de empaquetado está creada, pero la API actual no llega a iniciar porque la dependencia de `CategoriaDbContext` no está registrada; por eso la validación funcional del contenedor sigue pendiente.
+El proyecto tiene una imagen Docker multi-stage y una configuración Docker Compose para desarrollo. Compose ahora incluye PostgreSQL y entrega la conexión a la API; la validación funcional del contenedor sigue pendiente de ejecutar el flujo completo.
 
 ## Alcance
 
@@ -20,7 +20,7 @@ El proyecto tiene una imagen Docker multi-stage y una configuración Docker Comp
 - Documentar build, ejecución, logs, detención y configuración por ambiente.
 - Mantener Swagger disponible en el Compose de desarrollo cuando la API pueda arrancar.
 
-Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy, registro de imágenes y CI/CD.
+Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy, registro de imágenes y CI/CD.
 
 ## Decisiones técnicas
 
@@ -29,14 +29,14 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 - Publicación `Release` con `UseAppHost=false`.
 - Puerto interno: `8080`, mediante `ASPNETCORE_HTTP_PORTS`.
 - Compose de desarrollo: `ASPNETCORE_ENVIRONMENT=Development`.
-- No se agregan secretos ni una base de datos que todavía no está implementada.
-- El contenedor actual no resuelve ni corrige la configuración de DI de la aplicación; ese bloqueo pertenece a PRD-003/004/006.
+- No se agregan secretos al repositorio; la contraseña de PostgreSQL llega por `POSTGRES_PASSWORD`.
+- El contenedor usa el `CategoriaDbContext` provisional; el `AppDbContext` completo y las migraciones pertenecen a PRD-003/004/006.
 
 ## Artefactos y contratos
 
 - `Dockerfile`: construye y publica `InventarioVentas.API`.
 - `.dockerignore`: excluye `.git`, `bin`, `obj`, documentación y archivos locales del contexto.
-- `docker-compose.yml`: define el servicio `api`, su build, ambiente y publicación `8080:8080`.
+- `docker-compose.yml`: define `api`, PostgreSQL, su health check, la conexión interna y la publicación de puertos.
 - `docs/Docker.md`: documenta el flujo de uso y sus límites.
 
 ## Criterios de aceptación
@@ -48,7 +48,7 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 - `/swagger/v1/swagger.json` responde correctamente desde el contenedor.
 - La imagen final no requiere el SDK para ejecutarse.
 - El contexto no incluye `.git`, `bin`, `obj`, `docs`, `prd` ni secretos locales.
-- La documentación explica que SQL Server queda pendiente de PRD-003/004.
+- Compose incluye PostgreSQL para desarrollo y recibe la contraseña desde `POSTGRES_PASSWORD`.
 
 ## Casos de prueba y verificación
 
@@ -56,7 +56,7 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 | --- | --- |
 | Construir imagen desde la raíz | Build exitoso. |
 | Validar Compose | Configuración válida. |
-| Levantar el servicio | Pendiente: actualmente la aplicación falla al construir DI por `CategoriaDbContext` no registrado. |
+| Levantar el servicio | Pendiente: debe ejecutarse con `POSTGRES_PASSWORD` y validar la API contra PostgreSQL. |
 | Consultar Swagger | Pendiente hasta resolver el arranque de la API. |
 | Detener Compose | Contenedor detenido y recursos del proyecto removidos. |
 | Revisar configuración | Sin secretos ni conexión de base de datos ficticia. |
@@ -65,7 +65,7 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 
 - Las imágenes `10.0` siguen la línea del framework del proyecto; una estrategia de actualización o fijación por digest deberá definirse para despliegues controlados.
 - HTTPS, health checks y observabilidad de contenedor se deben definir cuando exista un entorno de despliegue real.
-- Cuando se implemente persistencia, el Compose deberá incorporar la estrategia de SQL Server y sus secretos sin copiar credenciales al repositorio.
+- Las migraciones y el esquema completo quedan pendientes de PRD-003/004; las credenciales de PostgreSQL no deben copiarse al repositorio.
 
 ## Trazabilidad
 
@@ -75,7 +75,7 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 | Commit o PR | `6170d3e chore: :twisted_rightwards_arrows: merge develop changes` |
 | Archivos modificados | `Dockerfile`, `.dockerignore`, `docker-compose.yml`, `docs/Docker.md` y documentación relacionada |
 | Pruebas ejecutadas | `docker compose config` y build documentados; la ejecución actual debe repetirse después de resolver el arranque de la API |
-| Evidencia adicional | El contenedor usa `Development` y publica `8080`, pero la aplicación falla durante la validación de DI por `CategoriaDbContext` no registrado |
+| Evidencia adicional | `docker compose config` valida API, PostgreSQL, health check y conexión interna; falta ejecutar `up --build` |
 | Responsable y fecha de implementación | Codex, 2026-08-25 |
 
 ## Referencias

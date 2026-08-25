@@ -31,7 +31,7 @@ Cubrir validaciones de campos, cálculo de subtotales y total, mapeos y decision
 
 ### Integración
 
-Cubrir `AppDbContext`, relaciones, índices únicos, migraciones y operaciones de service contra una base SQL Server de pruebas o un ambiente aislado equivalente documentado.
+Cubrir `AppDbContext`, relaciones, índices únicos, migraciones y operaciones de service contra una base PostgreSQL de pruebas o un ambiente aislado equivalente documentado.
 
 ### API
 
@@ -91,7 +91,7 @@ Para pruebas manuales, registrar endpoint, request, response, código HTTP y res
 
 ## Riesgos y decisiones pendientes
 
-- Debe definirse el proveedor o estrategia concreta de base de datos aislada para pruebas de integración; no usar SQLite como sustituto silencioso si se pretende validar comportamiento específico de SQL Server.
+- Debe definirse el proveedor o estrategia concreta de base de datos aislada para pruebas de integración; no usar SQLite como sustituto silencioso si se pretende validar comportamiento específico de PostgreSQL.
 - Las pruebas concurrentes de stock pueden requerir una estrategia de aislamiento adicional.
 - Los datos de pruebas deben ser reproducibles y no depender de una base personal persistente.
 

@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoriaDbContext` inicial usado por el service de Categorías, pero no corresponde todavía al `AppDbContext` previsto, no está registrado en DI y no tiene configuración de conexión ni migraciones.
+El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoriaDbContext` inicial usado por el service de Categorías, registrado con PostgreSQL, pero no corresponde todavía al `AppDbContext` previsto y no tiene migraciones.
 
 ## Alcance
 
@@ -49,7 +49,7 @@ Las configuraciones deben cubrir:
 
 - Services de los módulos, que consultarán y persistirán entidades.
 - Comandos de EF Core y migraciones.
-- SQL Server como motor de datos objetivo.
+- PostgreSQL como motor de datos objetivo mediante `Npgsql.EntityFrameworkCore.PostgreSQL`.
 - Pruebas de persistencia y de integración de la API.
 
 ## Interfaces y tipos afectados
@@ -65,8 +65,8 @@ El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones n
 - Existe `Data/Configurations/CategoriaDb.cs` con un `CategoriaDbContext` y un único `DbSet<Categoria>`.
 - `CategoriasService` depende de ese contexto para ejecutar un CRUD inicial.
 - No existen todavía `AppDbContext`, las entidades completas del dominio ni las cinco configuraciones esperadas.
-- `Program.cs` registra `ICategoriasService`, pero no registra `CategoriaDbContext`; el host falla durante la validación de DI.
-- No existe `ConnectionStrings:DefaultConnection` en los archivos de configuración.
+- `Program.cs` registra `ICategoriasService` y `CategoriaDbContext` mediante `UseNpgsql`.
+- `appsettings.json` declara `ConnectionStrings:DefaultConnection` sin valor; el valor real debe llegar desde User Secrets, variables de entorno o Compose.
 
 ## Impacto en datos
 
@@ -108,7 +108,7 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 | Rama | `main` |
 | Commit o PR | Pendiente |
 | Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoriaDb.cs` y `src/InventarioVentas.API/Modules/Categorias/Services/CategoriasService.cs` contienen la implementación parcial actual |
-| Pruebas ejecutadas | `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque bloqueado por contexto no registrado |
+| Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque sin conexión falla con el mensaje esperado |
 | Evidencia adicional | La implementación parcial no cumple aún el contrato de cinco entidades, relaciones, índices y precisión decimal |
 | Responsable y fecha de implementación | Pendiente |
 

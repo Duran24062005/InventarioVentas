@@ -1,6 +1,6 @@
 # InventarioVentas
 
-API REST para gestionar categorias, productos, clientes y ventas. El proyecto usa .NET 10, ASP.NET Core Web API, Entity Framework Core y SQL Server.
+API REST para gestionar categorias, productos, clientes y ventas. El proyecto usa .NET 10, ASP.NET Core Web API, Entity Framework Core y PostgreSQL.
 
 ## Como pensar el proyecto
 
@@ -39,7 +39,7 @@ Tambien puedes ejecutar la API con Docker Compose:
 docker compose up --build
 ```
 
-En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. La configuracion actual contiene solo la API; SQL Server se incorporara junto con PRD-003 y PRD-004.
+En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. Compose levanta la API junto con PostgreSQL. Define `POSTGRES_PASSWORD` antes de iniciar los servicios para no versionar credenciales.
 
 ## Reglas para colaborar
 
@@ -52,7 +52,7 @@ En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. La conf
 
 ## Estado actual
 
-La base tecnica de la API esta implementada de forma parcial: se registran controllers, Swagger y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. Categorias tiene un CRUD inicial, Productos tiene DTOs, contrato de service y validator, y Clientes/Ventas siguen pendientes. El arranque actual esta bloqueado porque `CategoriaDbContext` aun no esta registrado en DI.
+La base tecnica de la API esta implementada de forma parcial: se registran controllers, Swagger, PostgreSQL y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. Categorias tiene un CRUD inicial, Productos tiene DTOs, contrato de service y validator, y Clientes/Ventas siguen pendientes. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, la aplicación falla de forma explícita.
 
 El siguiente entregable es completar PRD-002 y PRD-003: unificar el modelo de dominio, crear `AppDbContext`, configurar la conexión y registrar las dependencias necesarias. El paso a paso completo esta en [`todo-task.md`](todo-task.md).
 

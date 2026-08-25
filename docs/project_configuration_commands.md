@@ -33,12 +33,12 @@ Después entra al proyecto:
 cd src/InventarioVentas.API
 ```
 
-### 2. Instalar Entity Framework Core para SQL Server
+### 2. Instalar Entity Framework Core para PostgreSQL
 
 Como el proyecto será .NET 10, mantendría EF Core en la rama **10.x**. La versión usada por el proyecto es 10.0.11.
 
 ```bash
-dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.11
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 10.0.3
 
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 10.0.11
 
@@ -223,7 +223,16 @@ Luego:
 dotnet run
 ```
 
-Cuando estén registradas todas las dependencias de persistencia, la API debería iniciar sin errores. En el estado actual, `dotnet run` falla porque `CategoriaDbContext` es requerido por `CategoriasService` pero todavía no está registrado en DI. Después de corregirlo, verifica Swagger en:
+Para ejecutar la API fuera de Docker, configura la conexión mediante User Secrets o una variable de entorno. Por ejemplo:
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=inventarioventas;Username=postgres;Password=<tu-password>"
+```
+
+La misma configuración puede suministrarse con la variable `ConnectionStrings__DefaultConnection`.
+
+Con una conexión PostgreSQL configurada, la API debería iniciar sin errores. Sin `ConnectionStrings:DefaultConnection`, `Program.cs` falla de forma explícita y accionable. Después de configurar la conexión, verifica Swagger en:
 
 ```text
 http://localhost:5011/swagger
@@ -247,7 +256,7 @@ La API queda disponible en `http://localhost:8080/swagger`. Para detenerla:
 docker compose down
 ```
 
-El flujo Docker está documentado con más detalle en [`docs/Docker.md`](Docker.md). La configuración actual empaqueta únicamente la API; todavía no incluye SQL Server.
+El flujo Docker está documentado con más detalle en [`docs/Docker.md`](Docker.md). Compose incluye la API y PostgreSQL; define `POSTGRES_PASSWORD` antes de levantarlo.
 
 ### 9. Inicializar Git
 
@@ -322,6 +331,6 @@ dotnet ef database update
 
 El orden que recomiendo seguir ahora es:
 
-**1. Crear entidades → 2. Crear relaciones → 3. Crear AppDbContext → 4. Configurar SQL Server → 5. Registrar DbContext en Program.cs → 6. Crear migración → 7. Crear BD → 8. Empezar Categorías.**
+**1. Crear entidades → 2. Crear relaciones → 3. Crear AppDbContext → 4. Configurar PostgreSQL → 5. Registrar DbContext en Program.cs → 6. Crear migración → 7. Crear BD → 8. Empezar Categorías.**
 
 Si seguimos en ese orden, puedo darte ahora **el código exacto de las 5 entidades (`Categoria`, `Producto`, `Cliente`, `Venta` y `DetalleVenta`) explicando línea por línea para que los tres entiendan qué están haciendo**.

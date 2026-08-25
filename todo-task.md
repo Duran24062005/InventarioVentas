@@ -9,12 +9,12 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 - [x] Categorías tiene un CRUD parcial con controller, DTOs, service, validator y `CategoriaDbContext` provisional.
 - [x] Productos tiene DTOs, contrato de service, service vacío y validator inicial.
 - [ ] La API arranca correctamente.
-- [ ] Existe un `AppDbContext` completo y una conexión a SQL Server.
+- [ ] Existe un `AppDbContext` completo y una conexión a PostgreSQL.
 - [ ] Hay migraciones, pruebas funcionales o pruebas de integración.
 
 ### Bloqueo inmediato
 
-`CategoriasService` recibe `CategoriaDbContext`, pero `Program.cs` solo registra `ICategoriasService`. `builder.Build()` falla con `Unable to resolve service for type 'CategoriaDbContext'`. No se debe ocultar el problema eliminando el registro de Categorías; debe resolverse al completar la persistencia.
+`CategoriasService` recibe `CategoriaDbContext` y ambos servicios ya están registrados en DI. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, `Program.cs` falla con un mensaje claro indicando que PostgreSQL necesita esa configuración. El contexto sigue siendo provisional y debe integrarse en el `AppDbContext` completo.
 
 ## Paso a paso pendiente
 
@@ -41,11 +41,11 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 **Salida:** `dotnet build` pasa y `AppDbContext` puede resolverse desde DI.
 
-### 3. Configurar SQL Server y migraciones — PRD-004
+### 3. Configurar PostgreSQL y migraciones — PRD-004
 
 - [ ] Agregar el contrato `ConnectionStrings:DefaultConnection` sin secretos versionados.
 - [ ] Definir el mecanismo local: User Secrets o variables de entorno.
-- [ ] Incorporar SQL Server al entorno local cuando la estrategia esté decidida.
+- [x] Incorporar PostgreSQL al entorno local mediante Docker Compose.
 - [ ] Crear y revisar la migración inicial.
 - [ ] Ejecutar `dotnet ef database update` contra una base de datos de desarrollo aislada.
 - [ ] Documentar comandos de migración, actualización y reversión.
@@ -68,7 +68,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 - [ ] Ajustar los DTOs para que `FechaCreacion` y `Estado` controlados por backend no sean obligatorios al crear.
 - [ ] Alinear el validator con el contrato definitivo, incluyendo la semántica de `false` para `Estado`.
-- [ ] Registrar el contexto definitivo y comprobar el CRUD contra SQL Server.
+- [ ] Registrar el contexto definitivo y comprobar el CRUD contra PostgreSQL.
 - [ ] Cambiar `DELETE` a eliminación lógica si se confirma la política de historial.
 - [ ] Definir si los listados muestran categorías activas solamente o todas.
 - [ ] Alinear los códigos HTTP de `PUT` y `DELETE` con el contrato elegido.
@@ -115,7 +115,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 - [ ] Crear proyectos de pruebas y documentar el framework elegido.
 - [ ] Cubrir validators, services, `AppDbContext`, relaciones, índices y migraciones.
 - [ ] Cubrir controllers, códigos HTTP, DTOs y middleware.
-- [ ] Ejecutar pruebas contra SQL Server de prueba o un entorno aislado documentado.
+- [ ] Ejecutar pruebas contra PostgreSQL de prueba o un entorno aislado documentado.
 - [ ] Registrar comandos y resultados en la trazabilidad de cada PRD.
 
 **Salida:** la API tiene evidencia reproducible más allá de una compilación exitosa.
@@ -133,7 +133,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 ### 11. Revalidar Docker — PRD-012
 
 - [ ] Confirmar que la API arranque dentro del contenedor después de completar DI y persistencia.
-- [ ] Decidir si Compose incluirá SQL Server y cómo se gestionarán sus secretos.
+- [x] Decidir que Compose incluirá PostgreSQL y gestionar su contraseña mediante variable de entorno.
 - [ ] Ejecutar `docker compose config`.
 - [ ] Ejecutar `docker compose up --build`.
 - [ ] Verificar Swagger y endpoints funcionales dentro del contenedor.

@@ -4,7 +4,7 @@
 
 **Nombre:** Sistema de Gestion de Inventario y Ventas  
 **Tipo:** API REST backend  
-**Stack obligatorio:** .NET 10, ASP.NET Core Web API, Entity Framework Core, SQL Server, Swagger, Git  
+**Stack obligatorio:** .NET 10, ASP.NET Core Web API, Entity Framework Core, PostgreSQL, Swagger, Git
 **Objetivo principal:** construir una API REST para administrar categorias, productos, clientes y ventas, aplicando un monolito modular, validaciones, persistencia con EF Core y buenas practicas backend.
 
 Este artefacto funciona como guia tecnica y funcional para implementar, revisar y validar el proyecto.
@@ -18,7 +18,7 @@ El objetivo no es construir una solucion empresarial compleja, sino un proyecto 
 - C#.
 - ASP.NET Core Web API.
 - Entity Framework Core.
-- SQL Server.
+- PostgreSQL.
 - API REST.
 - Arquitectura por capas.
 - Validaciones.
@@ -509,7 +509,7 @@ Responsabilidades:
 ## 13. Plan de implementacion sugerido
 
 1. Crear solucion y proyecto `InventarioVentas.API`.
-2. Instalar paquetes necesarios de EF Core, SQL Server, Swagger y FluentValidation.
+2. Instalar paquetes necesarios de EF Core, PostgreSQL, Swagger y FluentValidation.
 3. Crear modelos de dominio.
 4. Configurar `ApplicationDbContext`.
 5. Configurar relaciones, indices unicos y precision decimal.
@@ -520,7 +520,7 @@ Responsabilidades:
 10. Implementar controllers.
 11. Configurar inyeccion de dependencias.
 12. Crear migracion inicial.
-13. Aplicar migracion a SQL Server.
+13. Aplicar migracion a PostgreSQL.
 14. Probar endpoints desde Swagger.
 15. Corregir validaciones, respuestas HTTP y casos borde.
 16. Documentar decisiones relevantes en el repositorio.
