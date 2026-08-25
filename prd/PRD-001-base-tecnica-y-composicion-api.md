@@ -72,6 +72,7 @@ No modifica datos ni crea integraciones externas. Solo establece el punto de com
 | Ejecutar `dotnet restore` | Restauración exitosa. |
 | Ejecutar `dotnet build` | 0 errores y 0 advertencias. |
 | Ejecutar la API sin conexión | Falla de forma clara indicando que `ConnectionStrings:DefaultConnection` es obligatoria. |
+| Solicitar `GET /api/categorias` | La ruta se descubre y llega al controller; la respuesta queda pendiente del esquema de PostgreSQL definido en PRD-003/004/006. |
 | Solicitar `/weatherforecast` | `404 Not Found`. |
 | Abrir `/swagger` en desarrollo | Swagger UI disponible. |
 | Solicitar `/swagger/v1/swagger.json` en desarrollo | `200 OK` con la especificación disponible. |
@@ -88,12 +89,12 @@ No modifica datos ni crea integraciones externas. Solo establece el punto de com
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | `main` |
-| Commit o PR | `6170d3e chore: :twisted_rightwards_arrows: merge develop changes` |
+| Rama | `develop` |
+| Commit o PR | `2b4acec`, `3f2c475`, `80ead40` |
 | Archivos de implementación | `src/InventarioVentas.API/Program.cs`, `src/InventarioVentas.API/InventarioVentas.API.csproj` |
 | Archivos de documentación | README raíz, `docs/`, README de la API, perfiles locales e `InventarioVentas.API.http` |
-| Pruebas ejecutadas | `dotnet restore InventarioVentas.slnx`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; `dotnet run --project src/InventarioVentas.API/InventarioVentas.API.csproj` sin conexión falla con el mensaje esperado |
-| Evidencia adicional | La composición registra el contexto provisional; el arranque funcional con PostgreSQL queda pendiente de una conexión disponible |
+| Pruebas ejecutadas | `dotnet restore InventarioVentas.slnx` y `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; API iniciada con PostgreSQL; Swagger verificado; `/weatherforecast` verificado con `404`; `GET /api/categorias` probado el 2026-08-25 |
+| Evidencia adicional | `GET /api/categorias` alcanza `CategoriesController`, pero responde `500` porque PostgreSQL aún no tiene la relación `"Categories"` (`SqlState 42P01`). El esquema/migraciones pertenece a PRD-003/004/006 y está fuera del alcance de este PRD. |
 | Responsable y fecha de implementación | Codex, 2026-08-25 |
 
 ## Referencias
