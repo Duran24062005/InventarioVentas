@@ -1,4 +1,9 @@
-# InventarioVentas
+<div align="center">
+    <img src="https://camo.githubusercontent.com/dd5617114d80a0ba78cf3399d700ae1597ae87c832a28062848c4fafb54546da/68747470733a2f2f6769746875622e6769746875626173736574732e636f6d2f6173736574732f70726f66696c652d66697273742d69737375652d6461726b2d6238646262303236383762322e737667" alt="github image">
+    <h1>InventarioVentas</h1>
+</div>
+
+# Introducción
 
 API REST para gestionar categorias, productos, clientes y ventas. El proyecto usa .NET 10, ASP.NET Core Web API, Entity Framework Core y PostgreSQL.
 
