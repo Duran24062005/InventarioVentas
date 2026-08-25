@@ -223,7 +223,7 @@ Luego:
 dotnet run
 ```
 
-Si todo está bien, la API debería iniciar sin errores. En desarrollo, verifica Swagger en:
+Cuando estén registradas todas las dependencias de persistencia, la API debería iniciar sin errores. En el estado actual, `dotnet run` falla porque `CategoriaDbContext` es requerido por `CategoriasService` pero todavía no está registrado en DI. Después de corregirlo, verifica Swagger en:
 
 ```text
 http://localhost:5011/swagger

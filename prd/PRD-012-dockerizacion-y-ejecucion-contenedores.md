@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Terminado |
+| Estado | En progreso |
 | Prioridad | Media |
 | Dependencias | PRD-001 |
 | Módulo propietario | Infraestructura y ejecución local |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El proyecto puede ejecutarse con el SDK local de .NET, pero no tiene una forma reproducible de empaquetar y levantar la API. Este PRD agrega una imagen Docker multi-stage y una configuración Docker Compose para desarrollo, manteniendo fuera de alcance la base de datos hasta que exista la persistencia funcional.
+El proyecto tiene una imagen Docker multi-stage y una configuración Docker Compose para desarrollo. La infraestructura de empaquetado está creada, pero la API actual no llega a iniciar porque la dependencia de `CategoriaDbContext` no está registrada; por eso la validación funcional del contenedor sigue pendiente.
 
 ## Alcance
 
@@ -18,7 +18,7 @@ El proyecto puede ejecutarse con el SDK local de .NET, pero no tiene una forma r
 - Crear `.dockerignore` para reducir el contexto y excluir artefactos o secretos.
 - Crear `docker-compose.yml` para ejecutar la API en el puerto `8080`.
 - Documentar build, ejecución, logs, detención y configuración por ambiente.
-- Mantener Swagger disponible en el Compose de desarrollo.
+- Mantener Swagger disponible en el Compose de desarrollo cuando la API pueda arrancar.
 
 Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy, registro de imágenes y CI/CD.
 
@@ -30,6 +30,7 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 - Puerto interno: `8080`, mediante `ASPNETCORE_HTTP_PORTS`.
 - Compose de desarrollo: `ASPNETCORE_ENVIRONMENT=Development`.
 - No se agregan secretos ni una base de datos que todavía no está implementada.
+- El contenedor actual no resuelve ni corrige la configuración de DI de la aplicación; ese bloqueo pertenece a PRD-003/004/006.
 
 ## Artefactos y contratos
 
@@ -55,8 +56,8 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 | --- | --- |
 | Construir imagen desde la raíz | Build exitoso. |
 | Validar Compose | Configuración válida. |
-| Levantar el servicio | Contenedor `api` en ejecución. |
-| Consultar Swagger | `200 OK`. |
+| Levantar el servicio | Pendiente: actualmente la aplicación falla al construir DI por `CategoriaDbContext` no registrado. |
+| Consultar Swagger | Pendiente hasta resolver el arranque de la API. |
 | Detener Compose | Contenedor detenido y recursos del proyecto removidos. |
 | Revisar configuración | Sin secretos ni conexión de base de datos ficticia. |
 
@@ -70,12 +71,12 @@ Fuera de alcance: SQL Server en Compose, migraciones, HTTPS dentro del contenedo
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | `feature/tecnic-base-and-api-composition` |
-| Commit o PR | `b60d21d feat: :whale: add Docker image and Compose service` |
+| Rama | `main` |
+| Commit o PR | `6170d3e chore: :twisted_rightwards_arrows: merge develop changes` |
 | Archivos modificados | `Dockerfile`, `.dockerignore`, `docker-compose.yml`, `docs/Docker.md` y documentación relacionada |
-| Pruebas ejecutadas | `docker compose config` válido; `docker build -t inventarioventas-api:dev .` exitoso; `docker compose up --build --detach` exitoso |
-| Evidencia adicional | Contenedor `inventarioventas-api-1` levantado en `0.0.0.0:8080->8080`; `/swagger/v1/swagger.json` respondió `200` con OpenAPI `3.0.4`; Compose detenido y limpiado con `docker compose down` |
-| Responsable y fecha de implementación | Codex, 2026-08-24 |
+| Pruebas ejecutadas | `docker compose config` y build documentados; la ejecución actual debe repetirse después de resolver el arranque de la API |
+| Evidencia adicional | El contenedor usa `Development` y publica `8080`, pero la aplicación falla durante la validación de DI por `CategoriaDbContext` no registrado |
+| Responsable y fecha de implementación | Codex, 2026-08-25 |
 
 ## Referencias
 

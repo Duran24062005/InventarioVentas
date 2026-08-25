@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-001 y PRD-003 |
 | Módulo propietario | `Common`, `Middleware` y composición de la API |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-Los módulos todavía no comparten un contrato para errores, validaciones ni respuestas HTTP. Este PRD define un comportamiento transversal consistente, de modo que cada controller traduzca resultados del service sin duplicar reglas ni exponer excepciones internas.
+Los módulos todavía no comparten un contrato conectado al pipeline para errores, validaciones ni respuestas HTTP. Ya existen tipos comunes y dos implementaciones de middleware, pero la composición no registra ninguna de ellas y debe consolidarse una sola estrategia antes de considerar terminado este PRD.
 
 ## Alcance
 
@@ -59,6 +59,14 @@ La API debe usar, como mínimo, `200 OK`, `201 Created`, `400 Bad Request` y `40
 
 No cambia el esquema de datos. Afecta el contrato HTTP de todos los módulos y establece una convención que consumidores de la API podrán reutilizar.
 
+## Estado actual de implementación
+
+- Existen `BusinessException`, `NotFoundException` y `ValidationException` en `Common/Exceptions`.
+- Existe `ApiResponse<T>` en `Common/Responses`, pero ningún controller actual lo utiliza.
+- Hay dos middlewares (`ExceptionMiddleware` y `ExceptionHandlingMiddleware`) con formatos, idioma y comportamiento distintos; ninguno está registrado en `Program.cs`.
+- `CrearCategoriaValidator` y `CrearProductoValidator` existen, pero no están registrados ni ejecutados automáticamente.
+- La API todavía no tiene un contrato de errores verificado mediante requests reales.
+
 ## Criterios de aceptación
 
 - Una solicitud inválida devuelve `400 Bad Request` con mensaje claro.
@@ -69,6 +77,7 @@ No cambia el esquema de datos. Afecta el contrato HTTP de todos los módulos y e
 - El middleware tiene un orden documentado en `Program.cs`.
 - Los controllers no duplican la traducción de las mismas excepciones.
 - El formato de error es consistente en Categorías, Productos, Clientes y Ventas.
+- Se conserva una única implementación de middleware y una única convención de respuesta antes de cerrar el PRD.
 
 ## Casos de prueba y verificación
 
@@ -91,11 +100,11 @@ No cambia el esquema de datos. Afecta el contrato HTTP de todos los módulos y e
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Pruebas ejecutadas | Pendiente |
-| Contrato HTTP verificado | Pendiente |
+| Archivos modificados | `src/InventarioVentas.API/Common`, `src/InventarioVentas.API/Middleware` y validators iniciales de Categorías y Productos |
+| Pruebas ejecutadas | Revisión estática; no hay pruebas funcionales y la API no arranca por DI |
+| Contrato HTTP verificado | Pendiente; middleware y validadores aún no están conectados |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

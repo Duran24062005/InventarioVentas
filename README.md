@@ -13,6 +13,7 @@ La regla mas importante es que cada cambio debe quedar en el modulo al que perte
 - [docs/](docs/README.md): decisiones de arquitectura, alcance funcional y comandos de configuracion.
 - [docs/Docker.md](docs/Docker.md): instrucciones para construir y ejecutar la API con Docker.
 - [prd/](prd/README.md): PRDs ordenados por dependencia y registro de trazabilidad del proyecto.
+- [todo-task.md](todo-task.md): estado actual, bloqueos y pasos pendientes de implementación.
 - [src/](src/README.md): codigo fuente.
 - [src/InventarioVentas.API/](src/InventarioVentas.API/README.md): API principal y composicion de la aplicacion.
 - [docs/Architecture.md](docs/Architecture.md): explicacion completa de la arquitectura modular.
@@ -51,8 +52,8 @@ En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. La conf
 
 ## Estado actual
 
-La base tecnica de la API ya esta implementada: se registran controllers, Swagger y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. La implementacion funcional de Categorias, Productos, Clientes y Ventas aun esta pendiente; sus carpetas contienen README y PRDs para guiar cada entrega.
+La base tecnica de la API esta implementada de forma parcial: se registran controllers, Swagger y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. Categorias tiene un CRUD inicial, Productos tiene DTOs, contrato de service y validator, y Clientes/Ventas siguen pendientes. El arranque actual esta bloqueado porque `CategoriaDbContext` aun no esta registrado en DI.
 
-El siguiente entregable es PRD-002, que define las entidades y relaciones del dominio.
+El siguiente entregable es completar PRD-002 y PRD-003: unificar el modelo de dominio, crear `AppDbContext`, configurar la conexión y registrar las dependencias necesarias. El paso a paso completo esta en [`todo-task.md`](todo-task.md).
 
 No se documentan `bin/` ni `obj/` porque son salidas generadas por .NET. Tampoco se agregan README a `.git`, `.agents` o `.codex`, porque no forman parte del codigo funcional del proyecto.

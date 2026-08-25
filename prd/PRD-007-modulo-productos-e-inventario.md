@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-006 |
 | Módulo propietario | `Modules/Productos` |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El sistema necesita administrar los productos que pueden venderse, su categoría, precio, existencia y estado. Este PRD implementa el inventario básico y define el contrato que Ventas usará para comprobar productos válidos y stock disponible.
+El sistema necesita administrar los productos que pueden venderse, su categoría, precio, existencia y estado. Actualmente existe un esqueleto inicial de DTOs, contrato de service y validator, pero todavía no hay entidad, controller ni persistencia funcional.
 
 ## Alcance
 
@@ -70,6 +70,14 @@ Las respuestas son DTOs y pueden incluir datos de la categoría; la entidad pers
 
 Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas dependerá de una consulta controlada de producto, existencia, estado, precio y stock.
 
+## Estado actual de implementación
+
+- Existen `CrearProductoDto`, `ProductoResponseDto`, `IProductoService`, `ProductoService` y `CrearProductoValidator`.
+- `ProductoService` está vacío y no hay `ProductosController` ni modelo `Producto`.
+- El DTO actual usa `int CategoriaId`, mientras el modelo de Categorías inicial usa `Guid Id`; esta incompatibilidad debe resolverse al cerrar PRD-002.
+- El validator cubre nombre, código, precio, stock y categoría, pero todavía no está registrado ni ejecutado por la API.
+- No existen consultas de unicidad, verificación de categoría, persistencia, actualización, desactivación ni control de stock.
+
 ## Criterios de aceptación
 
 - Se crea un producto válido asociado a una categoría existente.
@@ -81,6 +89,7 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 - Un producto inactivo no puede ser utilizado por Ventas.
 - `DELETE` conserva el registro y cambia su estado.
 - El controller no modifica stock directamente.
+- La entidad, controller, service, persistencia y pruebas se implementan antes de marcar el módulo como terminado.
 
 ## Casos de prueba y verificación
 
@@ -105,10 +114,10 @@ Usa la relación con Categorías y la tabla configurada en PRD-003. Ventas depen
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Pruebas ejecutadas | Pendiente |
+| Archivos modificados | DTOs, interfaz, service vacío y validator inicial en `Modules/Productos` |
+| Pruebas ejecutadas | Revisión estática; no hay endpoints ni pruebas funcionales |
 | Endpoints verificados | Pendiente |
 | Responsable y fecha de implementación | Pendiente |
 

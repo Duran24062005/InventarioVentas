@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-002 |
 | Módulo propietario | `Data` |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El modelo de dominio definido en PRD-002 aún no tiene una frontera de persistencia. Este PRD establece cómo se mapearán las entidades a SQL Server mediante Entity Framework Core, manteniendo las reglas de almacenamiento separadas de los módulos de negocio.
+El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoriaDbContext` inicial usado por el service de Categorías, pero no corresponde todavía al `AppDbContext` previsto, no está registrado en DI y no tiene configuración de conexión ni migraciones.
 
 ## Alcance
 
@@ -60,6 +60,14 @@ Las configuraciones deben cubrir:
 
 El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones no deben contener reglas de negocio de ventas o inventario.
 
+## Estado actual de implementación
+
+- Existe `Data/Configurations/CategoriaDb.cs` con un `CategoriaDbContext` y un único `DbSet<Categoria>`.
+- `CategoriasService` depende de ese contexto para ejecutar un CRUD inicial.
+- No existen todavía `AppDbContext`, las entidades completas del dominio ni las cinco configuraciones esperadas.
+- `Program.cs` registra `ICategoriasService`, pero no registra `CategoriaDbContext`; el host falla durante la validación de DI.
+- No existe `ConnectionStrings:DefaultConnection` en los archivos de configuración.
+
 ## Impacto en datos
 
 Este PRD define el esquema lógico que utilizará la migración inicial. Las restricciones de base de datos deben reforzar, no reemplazar, las validaciones de entrada y de service.
@@ -74,6 +82,7 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 - El contexto se registra por inyección de dependencias sin crear conexiones manuales en los services.
 - `dotnet build` continúa pasando sin errores ni advertencias.
 - El código de persistencia permanece dentro de `Data` y `Data/Configurations`.
+- El `CategoriaDbContext` provisional se reemplaza o integra en el `AppDbContext` definido por este PRD.
 
 ## Casos de prueba y verificación
 
@@ -96,11 +105,11 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Pruebas ejecutadas | Pendiente |
-| Evidencia adicional | Pendiente |
+| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoriaDb.cs` y `src/InventarioVentas.API/Modules/Categorias/Services/CategoriasService.cs` contienen la implementación parcial actual |
+| Pruebas ejecutadas | `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque bloqueado por contexto no registrado |
+| Evidencia adicional | La implementación parcial no cumple aún el contrato de cinco entidades, relaciones, índices y precisión decimal |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

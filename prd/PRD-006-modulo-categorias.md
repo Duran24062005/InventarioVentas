@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-002, PRD-003 y PRD-005 |
 | Módulo propietario | `Modules/Categorias` |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-Los productos necesitan una clasificación persistida y validada, pero el módulo de Categorías todavía es solo una estructura de carpetas. Este PRD implementa el ciclo de vida mínimo de una categoría y deja una capacidad clara para que Productos valide sus referencias.
+Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial, pero todavía no está conectado a un `DbContext` registrado ni cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
 
 ## Alcance
 
@@ -43,12 +43,14 @@ Request mínimo de creación/actualización:
 
 La respuesta debe usar un DTO y no exponer directamente la entidad EF Core.
 
+El código actual no coincide completamente con este contrato: `CrearCategoriaDto` y `ActualizarCategoriaDto` exigen también `FechaCreacion` y `Estado`, aunque el service asigna o controla esos valores. La decisión objetivo es que las propiedades controladas por backend no sean obligatorias en el request de creación.
+
 ## Reglas funcionales
 
 - `Nombre` es obligatorio y no puede estar vacío.
 - `FechaCreacion` se asigna en backend.
 - `Estado` inicia activo.
-- `DELETE` debe aplicar eliminación lógica mediante `Estado = false`, conforme a la recomendación vigente.
+- `DELETE` debe aplicar eliminación lógica mediante `Estado = false`, conforme a la recomendación vigente. La implementación actual elimina físicamente el registro y debe corregirse.
 - Las consultas deben respetar la decisión documentada sobre mostrar solo activas o también inactivas.
 - Una categoría inexistente se comunica mediante el contrato de errores de PRD-005.
 
@@ -59,6 +61,15 @@ La respuesta debe usar un DTO y no exponer directamente la entidad EF Core.
 - `CategoriaService` para validación funcional, persistencia y mapeo.
 - Validator FluentValidation para requests.
 - `CategoriasController` limitado a HTTP y delegación.
+
+## Estado actual de implementación
+
+- Existe `CategoriasController` con `GET`, `GET/{id}`, `POST`, `PUT/{id}` y `DELETE/{id}`.
+- Existe `CategoriasService` con consultas y persistencia mediante `CategoriaDbContext`.
+- Existe el modelo `Categoria` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
+- Existen DTOs y un validator inicial, pero sus campos obligatorios no coinciden todavía con el contrato objetivo.
+- `ICategoriasService` está registrado en `Program.cs`; `CategoriaDbContext` no, por lo que la API no arranca.
+- El controller devuelve `204 No Content` en actualización y eliminación, mientras el contrato documentado solicita `200 OK`.
 
 ## Impacto en datos e integraciones
 
@@ -74,6 +85,7 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 - El controller no contiene reglas de negocio ni acceso directo al contexto.
 - Los cambios se guardan mediante el service y la base de datos configurada.
 - El módulo conserva su código dentro de `Modules/Categorias`.
+- La persistencia está configurada y el endpoint completo se verifica contra una base de datos de desarrollo.
 
 ## Casos de prueba y verificación
 
@@ -97,11 +109,11 @@ Usa la tabla y relaciones definidas en PRD-003. Productos dependerá de la exist
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Pruebas ejecutadas | Pendiente |
-| Endpoints verificados | Pendiente |
+| Archivos modificados | `Modules/Categorias`, `Data/Configurations/CategoriaDb.cs` y `Program.cs` contienen la implementación parcial actual |
+| Pruebas ejecutadas | `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; ejecución bloqueada por `CategoriaDbContext` no registrado |
+| Endpoints verificados | No verificados; el host no llega a exponer Swagger ni las rutas de Categorías |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

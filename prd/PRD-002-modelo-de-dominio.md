@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | En progreso |
 | Prioridad | Alta |
 | Dependencias | PRD-001 |
 | Módulo propietario | Dominio compartido por Categorías, Productos, Clientes y Ventas |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-La API no tiene todavía entidades que representen inventario, compradores ni ventas. Este PRD define el modelo persistente mínimo y sus relaciones para que los servicios y la base de datos compartan las mismas reglas funcionales.
+La API todavía no tiene el modelo completo de inventario, compradores ni ventas. Existe una entidad `Categoria` provisional, pero sus tipos y contratos aún deben alinearse con el modelo completo para que los servicios y la base de datos compartan las mismas reglas funcionales.
 
 ## Alcance
 
@@ -68,6 +68,13 @@ Las relaciones deben conservar la trazabilidad histórica de las ventas. La deci
 
 Este modelo será la fuente para las tablas, claves, índices, relaciones y precisión decimal del PRD-003. No debe implementarse una migración hasta que el modelo y sus configuraciones estén revisados.
 
+## Estado actual de implementación
+
+- Existe `Modules/Categorias/Models/Categorias.cs` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
+- No existen todavía las entidades `Producto`, `Cliente`, `Venta` ni `DetalleVenta`.
+- La entidad provisional usa `Guid`, mientras los DTOs iniciales de Productos usan `int CategoriaId`; esta decisión debe resolverse antes de configurar las relaciones.
+- Los DTOs de Categorías mezclan campos controlados por backend con datos de entrada, por lo que no representan todavía el contrato definitivo del dominio.
+
 ## Criterios de aceptación
 
 - Existen las cinco entidades dentro de los módulos propietarios.
@@ -76,6 +83,7 @@ Este modelo será la fuente para las tablas, claves, índices, relaciones y prec
 - Los valores calculados de venta no dependen de datos confiables enviados desde HTTP.
 - No hay DTOs, controllers ni lógica de persistencia dentro de los modelos.
 - Las reglas de unicidad y precisión quedan listas para ser reforzadas por EF Core en PRD-003.
+- La entidad provisional de Categorías queda alineada con el tipo de identificador y los campos definitivos antes de cerrar este PRD.
 
 ## Casos de prueba y verificación
 
@@ -97,11 +105,11 @@ Este modelo será la fuente para las tablas, claves, índices, relaciones y prec
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `main` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Pruebas ejecutadas | Pendiente |
-| Evidencia adicional | Pendiente |
+| Archivos modificados | `src/InventarioVentas.API/Modules/Categorias/Models/Categorias.cs` contiene la entidad parcial actual |
+| Pruebas ejecutadas | Revisión estática; no hay pruebas de modelo ni de persistencia |
+| Evidencia adicional | Faltan cuatro entidades y debe resolverse la incompatibilidad `Guid`/`int` antes de PRD-003 |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

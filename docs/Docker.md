@@ -4,7 +4,7 @@ InventarioVentas puede ejecutarse como un contenedor de la API. La imagen usa un
 
 ## Alcance actual
 
-La configuración actual contiene únicamente la API. No se agrega un contenedor de SQL Server porque el proyecto todavía no tiene `DbContext`, connection string ni migraciones implementadas. La base de datos se incorporará cuando se implementen PRD-003 y PRD-004.
+La configuración actual contiene únicamente la API. Existe un `CategoriaDbContext` provisional, pero todavía no hay `AppDbContext`, cadena de conexión, migraciones ni un contenedor de SQL Server. La base de datos se incorporará cuando se implementen PRD-003 y PRD-004.
 
 ## Requisitos
 
@@ -34,7 +34,7 @@ El `Dockerfile` copia primero el `.csproj` para aprovechar la caché de restaura
 docker compose up --build
 ```
 
-La API queda disponible en:
+Cuando la composición de dependencias esté completa, la API quedará disponible en:
 
 - Swagger UI: <http://localhost:8080/swagger>
 - Especificación JSON: <http://localhost:8080/swagger/v1/swagger.json>
