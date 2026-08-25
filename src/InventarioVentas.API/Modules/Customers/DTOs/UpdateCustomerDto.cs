@@ -2,10 +2,10 @@
 
 namespace InventarioVentas.API.Modules.Customers.DTOs
 {
-    public class CreateCustomerDto
+    public class UpdateCustomerDto
     {
         [JsonPropertyName("NombreCompleto")]
-        public required string NombreCompleto { get; set; } = string.Empty;
+        public required string NobreCompleto { get; set; } = string.Empty;
         [JsonPropertyName("Documento")]
         public required int Documento { get; set; }
         [JsonPropertyName("Email")]
@@ -14,6 +14,8 @@ namespace InventarioVentas.API.Modules.Customers.DTOs
         public required string Telefono { get; set; } = string.Empty;
         [JsonPropertyName("FechaRegistro")]
         public required DateTime FechaRegistro { get; set; }
+
+
 
     }
 }

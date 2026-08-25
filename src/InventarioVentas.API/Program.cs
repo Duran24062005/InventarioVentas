@@ -2,6 +2,8 @@ using InventarioVentas.API.Data;
 using InventarioVentas.API.Data.Configurations;
 using InventarioVentas.API.Modules.Categories.Interfaces;
 using InventarioVentas.API.Modules.Categories.Services;
+using InventarioVentas.API.Modules.Customers.Interfaces;
+using InventarioVentas.API.Modules.Customers.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
