@@ -4,16 +4,16 @@ namespace InventarioVentas.API.Modules.Categories.Interfaces;
 
 public interface ICategoryService
 {
-    Task<IEnumerable<CategoryResponseDto>> GetAllAsync();
+    Task<IEnumerable<CategoryResponseDto>> GetAll();
 
-    Task<CategoryResponseDto?> GetByIdAsync(Guid id);
+    Task<CategoryResponseDto?> GetById(Guid id);
 
-    Task<CategoryResponseDto> CreateAsync(
+    Task<CategoryResponseDto> Create(
         CreateCategoryDto dto);
 
-    Task<bool> UpdateAsync(
+    Task<bool> Update(
         Guid id,
         UpdateCategoryDto dto);
 
-    Task<bool> DeleteAsync(Guid id);
+    Task<bool> Delete(Guid id);
 }

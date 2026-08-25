@@ -19,7 +19,7 @@ public class CategoryService : ICategoryService
     // GET ALL
     // ============================================================
 
-    public async Task<IEnumerable<CategoryResponseDto>> GetAllAsync()
+    public async Task<IEnumerable<CategoryResponseDto>> GetAll()
     {
         return await _context.Categories
             .Select(c => new CategoryResponseDto
@@ -38,7 +38,7 @@ public class CategoryService : ICategoryService
     // GET BY ID
     // ============================================================
 
-    public async Task<CategoryResponseDto?> GetByIdAsync(Guid id)
+    public async Task<CategoryResponseDto?> GetById(Guid id)
     {
         var category = await _context.Categories
             .FirstOrDefaultAsync(c => c.Id == id);
@@ -61,7 +61,7 @@ public class CategoryService : ICategoryService
     // CREATE
     // ============================================================
 
-    public async Task<CategoryResponseDto> CreateAsync(
+    public async Task<CategoryResponseDto> Create(
         CreateCategoryDto dto)
     {
         var category = new Category
@@ -92,7 +92,7 @@ public class CategoryService : ICategoryService
     // UPDATE
     // ============================================================
 
-    public async Task<bool> UpdateAsync(
+    public async Task<bool> Update(
         Guid id,
         UpdateCategoryDto dto)
     {
@@ -116,7 +116,7 @@ public class CategoryService : ICategoryService
     // DELETE
     // ============================================================
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> Delete(Guid id)
     {
         var category = await _context.Categories
             .FirstOrDefaultAsync(c => c.Id == id);

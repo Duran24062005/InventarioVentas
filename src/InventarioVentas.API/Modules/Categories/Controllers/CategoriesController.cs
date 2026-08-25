@@ -18,18 +18,18 @@ public class CategoriesController : ControllerBase
 
     // GET: api/categorias
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CategoryResponseDto>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<CategoryResponseDto>>> GetAll()
     {
-        var categories = await _categoryService.GetAllAsync();
+        var categories = await _categoryService.GetAll();
 
         return Ok(categories);
     }
 
     // GET: api/categorias/{id}
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<CategoryResponseDto>> GetByIdAsync(Guid id)
+    public async Task<ActionResult<CategoryResponseDto>> GetById(Guid id)
     {
-        var category = await _categoryService.GetByIdAsync(id);
+        var category = await _categoryService.GetById(id);
 
         if (category is null)
             return NotFound();
@@ -39,24 +39,24 @@ public class CategoriesController : ControllerBase
 
     // POST: api/categorias
     [HttpPost]
-    public async Task<ActionResult<CategoryResponseDto>> CreateAsync(
+    public async Task<ActionResult<CategoryResponseDto>> Create(
         CreateCategoryDto dto)
     {
-        var category = await _categoryService.CreateAsync(dto);
+        var category = await _categoryService.Create(dto);
 
         return CreatedAtAction(
-            nameof(GetByIdAsync),
+            nameof(GetById),
             new { id = category.Id },
             category);
     }
 
     // PUT: api/categorias/{id}
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(
+    public async Task<IActionResult> Update(
         Guid id,
         UpdateCategoryDto dto)
     {
-        var result = await _categoryService.UpdateAsync(id, dto);
+        var result = await _categoryService.Update(id, dto);
 
         if (!result)
             return NotFound();
@@ -68,7 +68,7 @@ public class CategoriesController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
-        var result = await _categoryService.DeleteAsync(id);
+        var result = await _categoryService.Delete(id);
 
         if (!result)
             return NotFound();
