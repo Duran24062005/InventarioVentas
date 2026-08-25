@@ -6,5 +6,28 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=inventarioventas;Username=postgres;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting Compose}
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "8080:8080"
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: inventarioventas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting Compose}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d inventarioventas"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
