@@ -1,8 +1,8 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace InventarioVentas.API.Modules.Products.DTOs;
 
-public class CreateProductDto
+public class UpdateProductDto
 {
     // Product display name (required).
     [JsonPropertyName("nombre")]
@@ -19,7 +19,10 @@ public class CreateProductDto
     // Initial quantity. Must be greater than or equal to zero.
     [JsonPropertyName("stock")]
     public required int Stock { get; set; }
-
+    [JsonPropertyName("stock")]
+    public required DateTime CreatedAt { get; set; }
+    [JsonPropertyName("IsActive")]
+    public required bool IsActive {  get; set; }
     // Category identifier for the product.
     [JsonPropertyName("categoriaId")]
     public required Guid CategoryId { get; set; }

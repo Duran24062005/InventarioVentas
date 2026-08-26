@@ -4,6 +4,8 @@ using InventarioVentas.API.Modules.Categories.Interfaces;
 using InventarioVentas.API.Modules.Categories.Services;
 using InventarioVentas.API.Modules.Customers.Interfaces;
 using InventarioVentas.API.Modules.Customers.Services;
+using InventarioVentas.API.Modules.Products.Interfaces;
+using InventarioVentas.API.Modules.Products.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -33,6 +35,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();  
 
 builder.Services.AddControllers();
 

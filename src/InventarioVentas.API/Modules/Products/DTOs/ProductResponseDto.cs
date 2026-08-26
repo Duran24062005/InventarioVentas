@@ -4,7 +4,7 @@ namespace InventarioVentas.API.Modules.Products.DTOs;
 
 public class ProductResponseDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [JsonPropertyName("nombre")]
     public string Name { get; set; } = string.Empty;
@@ -23,7 +23,9 @@ public class ProductResponseDto
 
     // Basic information about the linked category.
     [JsonPropertyName("categoriaId")]
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
+    [JsonPropertyName("CreateAt")]
+    public DateTime CreatedAt { get; set; } 
 
     [JsonPropertyName("nombreCtegoria")]
     public string CategoryName { get; set; } = string.Empty;
