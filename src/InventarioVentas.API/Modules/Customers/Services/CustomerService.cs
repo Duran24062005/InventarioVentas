@@ -21,7 +21,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
         ///GET ALL
 
 
-        public async Task<IEnumerable<CustomerResponse>> GetAllAsync()
+        public async Task<IEnumerable<CustomerResponse>> GetAll()
         {
             return await _context.Customers
                 .Select(cus => new CustomerResponse
@@ -41,7 +41,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
 
         //GET BY ID
 
-        public async Task<CustomerResponse?> GetByIdAsync(Guid id)
+        public async Task<CustomerResponse?> GetById(Guid id)
         {
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(cus => cus.Id == id);
@@ -67,7 +67,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
         ///Create
         ///
 
-        public async Task<CustomerResponse> CreateAsync(
+        public async Task<CustomerResponse> Create(
         CreateCustomerDto dto)
 
         {
@@ -98,7 +98,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
         }
         ///UPDATE 
         ///
-        public async Task<bool> UpdateAsync(
+        public async Task<bool> Update(
             Guid id, UpdateCustomerDto dto)
         {
             var customer = await _context.Customers
@@ -118,7 +118,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
 
         }
         ///DELETE
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(cus => cus.Id == id);

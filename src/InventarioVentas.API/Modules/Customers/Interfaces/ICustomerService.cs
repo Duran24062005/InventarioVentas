@@ -4,9 +4,9 @@ namespace InventarioVentas.API.Modules.Customers.Interfaces;
 
 public interface ICustomerService
 {
-    Task<IEnumerable<CustomerResponse>> GetAllAsync();
-    Task<CustomerResponse?> GetByIdAsync(Guid id);
-    Task<CustomerResponse> CreateAsync(CreateCustomerDto dto);
-    Task<bool> UpdateAsync(Guid id, UpdateCustomerDto dto);
-    Task<bool> DeleteAsync(Guid id);
+    Task<IEnumerable<CustomerResponse>> GetAll();
+    Task<CustomerResponse?> GetById(Guid id);
+    Task<CustomerResponse> Create(CreateCustomerDto dto);
+    Task<bool> Update(Guid id, UpdateCustomerDto dto);
+    Task<bool> Delete(Guid id);
 }

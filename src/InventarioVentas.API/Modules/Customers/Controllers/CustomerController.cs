@@ -18,18 +18,18 @@ public class CustomersController : ControllerBase
 
     // GET: api/customers 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CustomerResponse>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<CustomerResponse>>> GetAll()
     {
-        var customers = await _customerService.GetAllAsync();
+        var customers = await _customerService.GetAll();
 
         return Ok(customers);
     }
 
     // GET: api/customers/{id}
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<CustomerResponse>> GetByIdAsync(Guid id)
+    public async Task<ActionResult<CustomerResponse>> GetById(Guid id)
     {
-        var customer = await _customerService.GetByIdAsync(id);
+        var customer = await _customerService.GetById(id);
 
         if (customer is null)
             return NotFound();
@@ -39,24 +39,24 @@ public class CustomersController : ControllerBase
 
     // POST: api/customers
     [HttpPost]
-    public async Task<ActionResult<CustomerResponse>> CreateAsync(
+    public async Task<ActionResult<CustomerResponse>> Create(
         CreateCustomerDto dto)
     {
-        var customer = await _customerService.CreateAsync(dto);
+        var customer = await _customerService.Create(dto);
 
         return CreatedAtAction(
-            nameof(GetByIdAsync),
+            nameof(GetById),
             new { id = customer.Id },
             customer);
     }
 
     // PUT: api/customers/{id}
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(
+    public async Task<IActionResult> Update(
         Guid id,
         UpdateCustomerDto dto)
     {
-        var result = await _customerService.UpdateAsync(id, dto);
+        var result = await _customerService.Update(id, dto);
 
         if (!result)
             return NotFound();
@@ -66,9 +66,9 @@ public class CustomersController : ControllerBase
 
     // DELETE: api/customers/{id}
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        var result = await _customerService.DeleteAsync(id);
+        var result = await _customerService.Delete(id);
 
         if (!result)
             return NotFound();
