@@ -1,8 +1,9 @@
 namespace InventarioVentas.API.Data;
 
-using Microsoft.EntityFrameworkCore;
+using InventarioVentas.API.Modules.Customers.Models;
 using InventarioVentas.API.Modules.Categories.Models;
 using InventarioVentas.API.Modules.Products.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 public class AppDbContext : DbContext
@@ -13,6 +14,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<CustomerModel> Customers => Set<CustomerModel>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

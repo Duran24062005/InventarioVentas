@@ -14,7 +14,7 @@ public class CreateProductValidator : AbstractValidator<CreateProductDto>
         // The product code is required.
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("El código del producto es obligatorio.");
-        
+
         // Business rule: price must be greater than zero (HU02).
         RuleFor(x => x.Price)
             .GreaterThan(0).WithMessage("El precio debe ser mayor a cero.");
@@ -25,7 +25,9 @@ public class CreateProductValidator : AbstractValidator<CreateProductDto>
 
         // A valid category must be assigned.
         RuleFor(x => x.CategoryId)
-            .GreaterThan(0).WithMessage("Debe especificar una categoría válida");
+            .NotEmpty().WithMessage("Debe especificar una categoría válida");
     }
+
+
 
 }

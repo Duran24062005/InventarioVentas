@@ -14,4 +14,6 @@ public class Product
 
     public Guid CategoryId { get; set; }
     public Category Category { get; set; } = null!;
+
+    public ICollection<Category> Categories { get; set; } = new List<Category>();
 }
