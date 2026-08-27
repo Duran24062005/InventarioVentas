@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | Realizado |
 | Prioridad | Crítica |
 | Dependencias | PRD-007 y PRD-008 |
 | Módulo propietario | `Modules/Sales` |
