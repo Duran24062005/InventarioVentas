@@ -3,9 +3,11 @@ En tu proyecto, las migraciones deben generarse usando `AppDbContext`, porque es
 - `Categories`
 - `Products`
 - `Customers`
-- La configuración de productos y sus relaciones
+- `Sales`
+- `SaleDetails`
+- Las configuraciones de entidades y sus relaciones
 
-`CategoryDbContext` y `CustomerDbContext` son contextos auxiliares. Las migraciones versionadas del proyecto se generan usando `AppDbContext`.
+`AppDbContext` es el único contexto de la aplicación y el propietario de las migraciones versionadas. Los contextos auxiliares anteriores fueron eliminados para evitar modelos y unidades de trabajo divergentes.
 
 EF Core compara el modelo actual con el snapshot anterior al crear migraciones, y registra las migraciones aplicadas en una tabla de historial de PostgreSQL. [Documentación oficial de migraciones](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/)
 

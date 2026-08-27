@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InventarioVentas.API.Modules.Products.Controllers;
 
 [ApiController]
-[Route("api/products")]
+[Route("api/productos")]
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _productService;
@@ -16,7 +16,7 @@ public class ProductsController : ControllerBase
         _productService = productService;
     }
 
-    // GET: api/products
+    // GET: api/productos
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAllAsync()
     {
@@ -25,7 +25,7 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
-    // GET: api/products/{id}
+    // GET: api/productos/{id}
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ProductResponseDto>> GetByIdAsync(Guid id)
     {
@@ -37,7 +37,7 @@ public class ProductsController : ControllerBase
         return Ok(product);
     }
 
-    // POST: api/products
+    // POST: api/productos
     [HttpPost]
     public async Task<ActionResult<ProductResponseDto>> CreateAsync(
         CreateProductDto dto)
@@ -50,7 +50,7 @@ public class ProductsController : ControllerBase
             product);
     }
 
-    // PUT: api/products/{id}
+    // PUT: api/productos/{id}
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateAsync(
         Guid id,
@@ -64,7 +64,7 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/products/{id}
+    // DELETE: api/productos/{id}
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {

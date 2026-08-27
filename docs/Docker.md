@@ -4,7 +4,7 @@ InventarioVentas puede ejecutarse como un contenedor de la API. La imagen usa un
 
 ## Alcance actual
 
-Compose contiene la API y un servicio PostgreSQL para desarrollo. Existe un `CategoryDbContext` provisional y todavía no hay `AppDbContext` completo ni migraciones; por eso el esquema definitivo se incorporará cuando se complete PRD-003 y PRD-004.
+Compose contiene la API y un servicio PostgreSQL para desarrollo. La API usa un único `AppDbContext` y el repositorio contiene migraciones para el esquema actual. Todavía está pendiente ejecutar y verificar el flujo completo de migraciones y endpoints dentro de los contenedores.
 
 ## Requisitos
 
@@ -67,10 +67,10 @@ Si necesitas reconstruir la imagen después de un cambio de código, usa:
 docker compose up -d --build
 ```
 
-Cuando la composición de dependencias esté completa, la API quedará disponible en:
+Con la composición actual, la API queda disponible en:
 
-- Swagger UI: <http://localhost:8080/swagger>
-- Especificación JSON: <http://localhost:8080/swagger/v1/swagger.json>
+- Swagger UI: <http://localhost:5011/swagger>
+- Especificación JSON: <http://localhost:5011/swagger/v1/swagger.json>
 
 Detener los servicios:
 
@@ -84,13 +84,13 @@ Para eliminar también los datos locales de PostgreSQL, usa `docker compose down
 
 ```bash
 docker run --rm \
-  --publish 8080:8080 \
+  --publish 5011:5011 \
   --env ASPNETCORE_ENVIRONMENT=Development \
   --env ConnectionStrings__DefaultConnection="Host=<postgres-host>;Port=5432;Database=inventarioventas;Username=postgres;Password=<tu-password>" \
   inventarioventas-api:dev
 ```
 
-La imagen escucha en el puerto interno `8080`, definido mediante `ASPNETCORE_HTTP_PORTS`. El puerto publicado puede cambiarse en el lado izquierdo de `--publish`.
+La imagen escucha en el puerto interno `5011`, definido mediante `ASPNETCORE_HTTP_PORTS`. El puerto publicado puede cambiarse en el lado izquierdo de `--publish`.
 
 ## Configuración y seguridad
 
@@ -108,7 +108,7 @@ docker compose ps
 docker compose logs -f api
 ```
 
-Si el puerto `8080` está ocupado, cambia el lado izquierdo de `8080:8080`. Si el puerto `5432` está ocupado, define `POSTGRES_PORT` con otro puerto; el puerto interno de PostgreSQL permanece en `5432`.
+Si el puerto `5011` está ocupado, cambia el lado izquierdo de `5011:5011`. Si el puerto `5432` está ocupado, define `POSTGRES_PORT` con otro puerto; el puerto interno de PostgreSQL permanece en `5432`.
 
 ## Referencias
 

@@ -16,6 +16,8 @@ La regla mas importante es que cada cambio debe quedar en el modulo al que perte
 ## Donde encontrar cada cosa
 
 - [docs/](docs/README.md): decisiones de arquitectura, alcance funcional y comandos de configuracion.
+- [docs/CI.md](docs/CI.md): workflow e instrucciones de integración continua.
+- [docs/Testing.md](docs/Testing.md): alcance, comandos y limitaciones de las pruebas.
 - [docs/Docker.md](docs/Docker.md): instrucciones para construir y ejecutar la API con Docker.
 - [prd/](prd/README.md): PRDs ordenados por dependencia y registro de trazabilidad del proyecto.
 - [todo-task.md](todo-task.md): estado actual, bloqueos y pasos pendientes de implementación.
@@ -44,7 +46,7 @@ Tambien puedes ejecutar la API con Docker Compose:
 docker compose up --build
 ```
 
-En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. Compose levanta la API junto con PostgreSQL. Define `POSTGRES_PASSWORD` antes de iniciar los servicios para no versionar credenciales.
+En ese caso Swagger queda disponible en <http://localhost:5011/swagger>. Compose levanta la API junto con PostgreSQL. Define `POSTGRES_PASSWORD` antes de iniciar los servicios para no versionar credenciales.
 
 ## Reglas para colaborar
 
@@ -57,8 +59,8 @@ En ese caso Swagger queda disponible en <http://localhost:8080/swagger>. Compose
 
 ## Estado actual
 
-La base tecnica de la API esta implementada de forma parcial: se registran controllers, Swagger, PostgreSQL y el pipeline HTTP, y se retiro el endpoint de ejemplo `weatherforecast`. Categorias tiene un CRUD inicial, Productos tiene DTOs, contrato de service y validator, y Clientes/Ventas siguen pendientes. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, la aplicación falla de forma explícita.
+La API cuenta con CRUD para Categorías, Productos y Clientes, además de consulta y creación de Ventas con descuento transaccional de stock. La persistencia usa un único `AppDbContext`, PostgreSQL y migraciones versionadas. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, la aplicación falla de forma explícita.
 
-El siguiente entregable es completar PRD-002 y PRD-003: unificar el modelo de dominio, crear `AppDbContext`, configurar la conexión y registrar las dependencias necesarias. El paso a paso completo esta en [`todo-task.md`](todo-task.md).
+La suite automatizada inicial ya cubre validators, ventas y el modelo EF. La verificación funcional HTTP y contra PostgreSQL siguen pendientes; el estado operativo y los siguientes pasos se mantienen en [`todo-task.md`](todo-task.md).
 
 No se documentan `bin/` ni `obj/` porque son salidas generadas por .NET. Tampoco se agregan README a `.git`, `.agents` o `.codex`, porque no forman parte del codigo funcional del proyecto.

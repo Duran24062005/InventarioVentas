@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El modelo de dominio definido en PRD-002 todavía no tiene una frontera de persistencia completa. Existe un `CategoryDbContext` inicial usado por el service de Categorías, registrado con PostgreSQL, pero no corresponde todavía al `AppDbContext` previsto y no tiene migraciones.
+La persistencia necesita una frontera única para que los módulos compartan el mismo modelo y unidad de trabajo. El proyecto ya cuenta con `AppDbContext`, configuraciones EF y migraciones versionadas; este PRD conserva la verificación de ese modelo como parte pendiente.
 
 ## Alcance
 
@@ -62,10 +62,10 @@ El contexto no debe filtrarse hacia DTOs ni controllers, y las configuraciones n
 
 ## Estado actual de implementación
 
-- Existe `Data/Configurations/CategoryDbContext.cs` con un `CategoryDbContext` y un único `DbSet<Category>` llamado `Categories`.
-- `CategoryService` depende de ese contexto para ejecutar un CRUD inicial.
-- Existe un `AppDbContext` inicial con `Category` y `Product`, pero todavía no contiene las entidades completas del dominio ni las cinco configuraciones esperadas.
-- `Program.cs` registra `ICategoryService` y `CategoryDbContext` mediante `UseNpgsql`.
+- `AppDbContext` contiene los cinco `DbSet` del esquema actual y aplica las configuraciones de la asamblea.
+- Categorías, Productos, Clientes y Ventas usan `AppDbContext` mediante inyección de dependencias.
+- Los contextos auxiliares de Categorías y Clientes fueron eliminados para evitar modelos divergentes.
+- `Program.cs` delega la composición de persistencia y servicios a `AddApplicationServices`.
 - `appsettings.json` declara `ConnectionStrings:DefaultConnection` sin valor; el valor real debe llegar desde User Secrets, variables de entorno o Compose.
 
 ## Impacto en datos
@@ -105,11 +105,11 @@ Este PRD define el esquema lógico que utilizará la migración inicial. Las res
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | `main` |
+| Rama | `develop` |
 | Commit o PR | Pendiente |
-| Archivos modificados | `src/InventarioVentas.API/Data/Configurations/CategoryDbContext.cs`, `src/InventarioVentas.API/Data/AppDbContext.cs`, `src/InventarioVentas.API/Data/Configurations/ProductConfiguration.cs` y `src/InventarioVentas.API/Modules/Categories/Services/CategoryService.cs` contienen la implementación parcial actual |
-| Pruebas ejecutadas | `dotnet restore`, `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; arranque sin conexión falla con el mensaje esperado |
-| Evidencia adicional | La implementación parcial no cumple aún el contrato de cinco entidades, relaciones, índices y precisión decimal |
+| Archivos modificados | `src/InventarioVentas.API/Data/AppDbContext.cs`, `src/InventarioVentas.API/Data/Configurations/ProductConfiguration.cs`, `src/InventarioVentas.API/Extensions/DependencyInjection.cs` y services de Categorías/Clientes |
+| Pruebas ejecutadas | `dotnet build InventarioVentas.slnx --no-restore`: 0 errores y 0 advertencias; `dotnet ef migrations add FixProductCategoryRelation` generado correctamente |
+| Evidencia adicional | La migración correctiva elimina `Categories.ProductId`, restaura la FK restrictiva de `Products.CategoryId`, aplica precisión monetaria y crea el índice único de código |
 | Responsable y fecha de implementación | Pendiente |
 
 ## Referencias

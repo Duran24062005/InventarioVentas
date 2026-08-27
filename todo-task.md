@@ -1,20 +1,24 @@
 # TODO de InventarioVentas
 
-Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2026-08-25** en la rama `main`.
+Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2026-08-27** en la rama `develop`.
 
 ## Estado actual
 
 - [x] La solución compila con .NET 10: `dotnet build InventarioVentas.slnx --no-restore` termina con 0 errores y 0 advertencias.
-- [x] La API tiene composición inicial, Swagger y Docker multi-stage.
-- [x] Categorías tiene un CRUD parcial con controller, DTOs, service, validator y `CategoryDbContext` provisional.
-- [x] Productos tiene DTOs, contrato de service, service vacío y validator inicial.
+- [x] La API tiene composición, Swagger y Docker multi-stage.
+- [x] Categorías tiene un CRUD inicial conectado al `AppDbContext`.
+- [x] Productos tiene CRUD, DTOs, service, validator y configuración EF.
+- [x] Clientes tiene CRUD, DTOs, service y validator inicial.
+- [x] Ventas tiene consulta y creación con descuento transaccional de stock.
 - [ ] La API arranca correctamente.
-- [ ] Existe un `AppDbContext` completo y una conexión a PostgreSQL.
-- [ ] Hay migraciones, pruebas funcionales o pruebas de integración.
+- [x] Existe un `AppDbContext` único con los cinco `DbSet` y una conexión configurada.
+- [x] Hay migraciones versionadas para inventario, clientes, ventas y la corrección de la relación Categoría-Producto.
+- [x] Hay una base inicial de pruebas automatizadas: 6 pruebas de validators, services y modelo EF.
+- [ ] Hay pruebas funcionales HTTP o de integración contra PostgreSQL.
 
 ### Bloqueo inmediato
 
-`CategoryService` recibe `CategoryDbContext` y ambos servicios ya están registrados en DI. El arranque requiere `ConnectionStrings:DefaultConnection`; si falta, `Program.cs` falla con un mensaje claro indicando que PostgreSQL necesita esa configuración. El contexto sigue siendo provisional y debe integrarse en el `AppDbContext` completo.
+El código ya usa un único `AppDbContext` y la composición está centralizada en `AddApplicationServices`. Falta verificar el arranque contra una instancia real de PostgreSQL y aplicar las migraciones en una base de desarrollo aislada.
 
 ## Paso a paso pendiente
 
@@ -31,13 +35,13 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 ### 2. Unificar la persistencia — PRD-003
 
-- [ ] Reemplazar o integrar `CategoryDbContext` dentro de un único `AppDbContext` en `Data`.
-- [ ] Agregar los cinco `DbSet` esperados.
+- [x] Reemplazar los contextos auxiliares por un único `AppDbContext` en `Data`.
+- [x] Agregar los cinco `DbSet` esperados.
 - [ ] Crear una configuración EF Core por entidad.
 - [ ] Configurar claves, relaciones, nulabilidad, longitudes e índices únicos.
 - [ ] Configurar precisión explícita para `Precio`, `PrecioUnitario`, `Subtotal` y `Total`.
-- [ ] Registrar el contexto en DI desde `Program.cs` o una extensión propietaria.
-- [ ] Confirmar que `CategoryService` use el contexto definitivo.
+- [x] Registrar el contexto en DI desde una extensión propietaria.
+- [x] Confirmar que `CategoryService` y `CustomerService` usen el contexto definitivo.
 
 **Salida:** `dotnet build` pasa y `AppDbContext` puede resolverse desde DI.
 
@@ -46,7 +50,7 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 - [ ] Agregar el contrato `ConnectionStrings:DefaultConnection` sin secretos versionados.
 - [ ] Definir el mecanismo local: User Secrets o variables de entorno.
 - [x] Incorporar PostgreSQL al entorno local mediante Docker Compose.
-- [ ] Crear y revisar la migración inicial.
+- [x] Crear y revisar las migraciones del esquema actual.
 - [ ] Ejecutar `dotnet ef database update` contra una base de datos de desarrollo aislada.
 - [ ] Documentar comandos de migración, actualización y reversión.
 
@@ -112,11 +116,11 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 
 ### 9. Crear la estrategia de pruebas — PRD-010
 
-- [ ] Crear proyectos de pruebas y documentar el framework elegido.
-- [ ] Cubrir validators, services, `AppDbContext`, relaciones, índices y migraciones.
+- [x] Crear el proyecto de pruebas y documentar xUnit como framework elegido.
+- [x] Cubrir validators, services y el modelo `AppDbContext` con SQLite en memoria.
 - [ ] Cubrir controllers, códigos HTTP, DTOs y middleware.
 - [ ] Ejecutar pruebas contra PostgreSQL de prueba o un entorno aislado documentado.
-- [ ] Registrar comandos y resultados en la trazabilidad de cada PRD.
+- [x] Registrar comandos y resultados de la suite inicial en la trazabilidad de PRD-010.
 
 **Salida:** la API tiene evidencia reproducible más allá de una compilación exitosa.
 

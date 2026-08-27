@@ -1,4 +1,6 @@
-﻿namespace InventarioVentas.API.Modules.Categories.Models
+﻿using InventarioVentas.API.Modules.Products.Models;
+
+namespace InventarioVentas.API.Modules.Categories.Models
 {
     public class Category
     {
@@ -7,6 +9,8 @@
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
+
+        public ICollection<Product> Products { get; set; } = new List<Product>();
 
     }
 }

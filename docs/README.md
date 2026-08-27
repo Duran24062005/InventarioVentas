@@ -10,6 +10,8 @@ La hoja de ruta implementable y su trazabilidad se mantienen en [`../prd/README.
 - `Docker.md`: documenta la construccion y ejecucion local de la API con Docker y Docker Compose.
 - `System_Artifact.md`: define el problema, el alcance, el modelo de dominio y las reglas funcionales.
 - `project_configuration_commands.md`: contiene los comandos para crear, configurar, restaurar, compilar y ejecutar el proyecto con .NET 10.
+- `CI.md`: documenta el workflow de GitHub Actions y los comandos locales equivalentes.
+- `Testing.md`: documenta el proyecto de pruebas, su cobertura actual y las verificaciones pendientes.
 - [`../prd/README.md`](../prd/README.md): indice de PRDs, dependencias, historias relacionadas y decisiones abiertas.
 - [`../todo-task.md`](../todo-task.md): lista operativa de bloqueos, pasos pendientes y criterios de salida.
 

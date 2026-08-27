@@ -16,21 +16,21 @@ El proyecto tiene una imagen Docker multi-stage y una configuración Docker Comp
 
 - Crear un `Dockerfile` multi-stage para .NET 10.
 - Crear `.dockerignore` para reducir el contexto y excluir artefactos o secretos.
-- Crear `docker-compose.yml` para ejecutar la API en el puerto `8080`.
+- Crear `docker-compose.yml` para ejecutar la API en el puerto `5011`.
 - Documentar build, ejecución, logs, detención y configuración por ambiente.
 - Mantener Swagger disponible en el Compose de desarrollo cuando la API pueda arrancar.
 
-Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy, registro de imágenes y CI/CD.
+Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy y registro de imágenes. El CI básico de compilación y pruebas se documenta en [`docs/CI.md`](../docs/CI.md).
 
 ## Decisiones técnicas
 
 - Imagen de build: `mcr.microsoft.com/dotnet/sdk:10.0`.
 - Imagen final: `mcr.microsoft.com/dotnet/aspnet:10.0`.
 - Publicación `Release` con `UseAppHost=false`.
-- Puerto interno: `8080`, mediante `ASPNETCORE_HTTP_PORTS`.
+- Puerto interno: `5011`, mediante `ASPNETCORE_HTTP_PORTS`.
 - Compose de desarrollo: `ASPNETCORE_ENVIRONMENT=Development`.
 - No se agregan secretos al repositorio; la contraseña de PostgreSQL llega por `POSTGRES_PASSWORD`.
-- El contenedor usa el `CategoryDbContext` provisional; el `AppDbContext` completo y las migraciones pertenecen a PRD-003/004/006.
+- El contenedor usa el `AppDbContext` único y recibe la cadena de conexión mediante `ConnectionStrings__DefaultConnection`.
 
 ## Artefactos y contratos
 
@@ -44,7 +44,7 @@ Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productiv
 - `docker build -t inventarioventas-api:dev .` termina correctamente.
 - `docker compose config` genera una configuración válida.
 - `docker compose up --build` inicia la API.
-- Swagger responde en `http://localhost:8080/swagger` dentro del Compose de desarrollo.
+- Swagger responde en `http://localhost:5011/swagger` dentro del Compose de desarrollo.
 - `/swagger/v1/swagger.json` responde correctamente desde el contenedor.
 - La imagen final no requiere el SDK para ejecutarse.
 - El contexto no incluye `.git`, `bin`, `obj`, `docs`, `prd` ni secretos locales.
@@ -65,7 +65,7 @@ Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productiv
 
 - Las imágenes `10.0` siguen la línea del framework del proyecto; una estrategia de actualización o fijación por digest deberá definirse para despliegues controlados.
 - HTTPS, health checks y observabilidad de contenedor se deben definir cuando exista un entorno de despliegue real.
-- Las migraciones y el esquema completo quedan pendientes de PRD-003/004; las credenciales de PostgreSQL no deben copiarse al repositorio.
+- La aplicación de migraciones y la verificación funcional dentro de Compose siguen pendientes; las credenciales de PostgreSQL no deben copiarse al repositorio.
 
 ## Trazabilidad
 

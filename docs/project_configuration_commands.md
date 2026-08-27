@@ -250,7 +250,7 @@ Desde la raíz del repositorio:
 docker compose up --build
 ```
 
-La API queda disponible en `http://localhost:8080/swagger`. Para detenerla:
+La API queda disponible en `http://localhost:5011/swagger`. Para detenerla:
 
 ```bash
 docker compose down

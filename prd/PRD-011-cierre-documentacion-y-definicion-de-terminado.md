@@ -76,9 +76,9 @@ Un PRD puede pasar a `Terminado` solo cuando:
 
 | Verificación | Estado |
 | --- | --- |
-| `dotnet restore` | Pendiente |
-| `dotnet build` | Pendiente |
-| `dotnet test` | Pendiente |
+| `dotnet restore` | Ejecutado correctamente |
+| `dotnet build` | Exitoso: 0 errores y 0 advertencias |
+| `dotnet test` | Exitoso: 6 pruebas aprobadas |
 | Migraciones aplicadas | Pendiente |
 | Endpoints principales verificados | Pendiente |
 | Rollback de venta verificado | Pendiente |
