@@ -9,8 +9,7 @@ namespace InventarioVentas.API.Modules.Sales.Models
         public CustomerModel Customer { get; set; } = null!;
         public DateTime SaleDate {  get; set; }
         public decimal Total {  get; set; }
-
-       /// public ICollection<DetalleVenta> Detalles { get; set; } = new List<DetalleVenta>();
+       public ICollection<SaleDetails> Details { get; set; } = new List<SaleDetails>();
 
     }
 }
