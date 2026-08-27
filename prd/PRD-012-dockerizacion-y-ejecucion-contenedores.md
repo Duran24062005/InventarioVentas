@@ -20,7 +20,7 @@ El proyecto tiene una imagen Docker multi-stage y una configuración Docker Comp
 - Documentar build, ejecución, logs, detención y configuración por ambiente.
 - Mantener Swagger disponible en el Compose de desarrollo cuando la API pueda arrancar.
 
-Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy, registro de imágenes y CI/CD.
+Fuera de alcance: migraciones, HTTPS dentro del contenedor, despliegue productivo, reverse proxy y registro de imágenes. El CI básico de compilación y pruebas se documenta en [`docs/CI.md`](../docs/CI.md).
 
 ## Decisiones técnicas
 

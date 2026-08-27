@@ -37,7 +37,7 @@ Los modulos pueden colaborar cuando una regla lo exige, pero no deben acceder ar
 
 Actualmente existen endpoints funcionales para Categorías, Productos, Clientes y Ventas. Todos los services usan el `AppDbContext` único, registrado mediante `AddApplicationServices`, y las migraciones se generan con ese contexto.
 
-La ejecución requiere `ConnectionStrings:DefaultConnection`, que puede suministrarse mediante User Secrets, una variable de entorno o Docker Compose. La verificación contra PostgreSQL y las pruebas funcionales siguen pendientes.
+La ejecución requiere `ConnectionStrings:DefaultConnection`, que puede suministrarse mediante User Secrets, una variable de entorno o Docker Compose. Existen pruebas automatizadas iniciales; la verificación HTTP y contra PostgreSQL sigue pendiente.
 
 ## Antes de modificar
 

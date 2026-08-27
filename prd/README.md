@@ -13,7 +13,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 | Arranque actual | Requiere `ConnectionStrings:DefaultConnection`; el único contexto registrado es `AppDbContext` |
 | Implementación funcional | CRUD de Categorías, Productos y Clientes; creación y consulta de Ventas |
 | Persistencia | `AppDbContext` único con migraciones de inventario, clientes y ventas |
-| Pruebas funcionales | No implementadas |
+| Pruebas automatizadas | 6 pruebas unitarias/de modelo; integración HTTP y PostgreSQL pendiente |
 
 ## Mapa de PRDs
 
@@ -28,7 +28,7 @@ Esta carpeta contiene los Product Requirements Documents que guían la evolució
 | PRD-007 | [Módulo de productos e inventario](PRD-007-modulo-productos-e-inventario.md) | En progreso | PRD-006 |
 | PRD-008 | [Módulo de clientes](PRD-008-modulo-clientes.md) | Implementación parcial; verificación pendiente | PRD-002, PRD-005 |
 | PRD-009 | [Módulo de ventas y transacción de stock](PRD-009-modulo-ventas-y-transaccion-stock.md) | Implementación parcial; verificación pendiente | PRD-007, PRD-008 |
-| PRD-010 | [Pruebas y verificación de la API](PRD-010-pruebas-y-verificacion-api.md) | Propuesto | PRD-005 a PRD-009 |
+| PRD-010 | [Pruebas y verificación de la API](PRD-010-pruebas-y-verificacion-api.md) | Implementación inicial; integración pendiente | PRD-005 a PRD-009 |
 | PRD-011 | [Cierre, documentación y definición de terminado](PRD-011-cierre-documentacion-y-definicion-de-terminado.md) | Propuesto | PRD-001 a PRD-010 |
 | PRD-012 | [Dockerización y ejecución con contenedores](PRD-012-dockerizacion-y-ejecucion-contenedores.md) | En progreso | PRD-001 |
 

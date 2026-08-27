@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 | --- | --- |
-| Estado | Propuesto |
+| Estado | Implementación inicial; integración pendiente |
 | Prioridad | Alta |
 | Dependencias | PRD-005, PRD-006, PRD-007, PRD-008 y PRD-009 |
 | Módulo propietario | Pruebas y calidad transversal |
@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-El proyecto solo tiene una verificación de compilación y no cuenta con pruebas funcionales de los módulos ni del flujo transaccional de ventas. Este PRD define una estrategia de pruebas que permita detectar regresiones en validaciones, contratos HTTP, persistencia y stock.
+El proyecto ya cuenta con una base inicial de pruebas automatizadas para validaciones, ventas y el modelo EF. Este PRD mantiene la estrategia para ampliar la cobertura hacia contratos HTTP, persistencia PostgreSQL y el flujo completo de la API.
 
 ## Alcance
 
@@ -59,6 +59,14 @@ La prueba de stock insuficiente debe comprobar simultáneamente que:
 
 También debe verificarse que el precio enviado artificialmente por el consumidor no modifica el precio tomado de la base de datos.
 
+## Implementación actual
+
+- Proyecto `tests/InventarioVentas.API.Tests` registrado en `InventarioVentas.slnx`.
+- xUnit como framework de pruebas.
+- SQLite en memoria para aislar pruebas de services y modelo.
+- Seis pruebas automatizadas ejecutables mediante `dotnet test`.
+- Detalle de cobertura y limitaciones en [`docs/Testing.md`](../docs/Testing.md).
+
 ## Interfaces y artefactos afectados
 
 - Proyecto o proyectos de pruebas que se agreguen a la solución.
@@ -99,11 +107,11 @@ Para pruebas manuales, registrar endpoint, request, response, código HTTP y res
 
 | Evidencia | Valor |
 | --- | --- |
-| Rama | Pendiente |
+| Rama | `develop` |
 | Commit o PR | Pendiente |
-| Archivos modificados | Pendiente |
-| Comandos ejecutados | Baseline: `dotnet build --no-restore` exitoso el 2026-08-24 |
-| Resultado de pruebas | Pendiente |
+| Archivos modificados | `tests/InventarioVentas.API.Tests`, `InventarioVentas.slnx`, `docs/Testing.md` y `.github/workflows/ci.yml` |
+| Comandos ejecutados | `dotnet restore InventarioVentas.slnx`, `dotnet build InventarioVentas.slnx --configuration Release --no-restore`, `dotnet test tests/InventarioVentas.API.Tests/InventarioVentas.API.Tests.csproj --configuration Release --no-restore --no-build` |
+| Resultado de pruebas | 6 pruebas aprobadas, 0 fallos, 2026-08-27 |
 | Evidencia de rollback | Pendiente |
 | Responsable y fecha de implementación | Pendiente |
 

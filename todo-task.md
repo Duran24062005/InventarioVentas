@@ -13,7 +13,8 @@ Documento de seguimiento técnico y funcional. Refleja el estado revisado el **2
 - [ ] La API arranca correctamente.
 - [x] Existe un `AppDbContext` único con los cinco `DbSet` y una conexión configurada.
 - [x] Hay migraciones versionadas para inventario, clientes, ventas y la corrección de la relación Categoría-Producto.
-- [ ] Hay pruebas funcionales o pruebas de integración.
+- [x] Hay una base inicial de pruebas automatizadas: 6 pruebas de validators, services y modelo EF.
+- [ ] Hay pruebas funcionales HTTP o de integración contra PostgreSQL.
 
 ### Bloqueo inmediato
 
@@ -115,11 +116,11 @@ El código ya usa un único `AppDbContext` y la composición está centralizada 
 
 ### 9. Crear la estrategia de pruebas — PRD-010
 
-- [ ] Crear proyectos de pruebas y documentar el framework elegido.
-- [ ] Cubrir validators, services, `AppDbContext`, relaciones, índices y migraciones.
+- [x] Crear el proyecto de pruebas y documentar xUnit como framework elegido.
+- [x] Cubrir validators, services y el modelo `AppDbContext` con SQLite en memoria.
 - [ ] Cubrir controllers, códigos HTTP, DTOs y middleware.
 - [ ] Ejecutar pruebas contra PostgreSQL de prueba o un entorno aislado documentado.
-- [ ] Registrar comandos y resultados en la trazabilidad de cada PRD.
+- [x] Registrar comandos y resultados de la suite inicial en la trazabilidad de PRD-010.
 
 **Salida:** la API tiene evidencia reproducible más allá de una compilación exitosa.
 
