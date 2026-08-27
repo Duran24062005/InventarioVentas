@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/InventarioVentas.API/InventarioVentas.API.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InventarioVentas.API.Tests/InventarioVentas.API.Tests.csproj" />
+  </Folder>
 </Solution>
