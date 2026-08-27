@@ -12,8 +12,5 @@ namespace InventarioVentas.API.Modules.Customers.DTOs
         public required string Email { get; set; } = string.Empty;
         [JsonPropertyName("Telefono")]
         public required string Telefono { get; set; } = string.Empty;
-        [JsonPropertyName("FechaRegistro")]
-        public required DateTime FechaRegistro { get; set; }
-
     }
 }

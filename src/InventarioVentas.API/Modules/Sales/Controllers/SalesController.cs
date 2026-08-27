@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InventarioVentas.API.Modules.Sales.Controllers;
 
 [ApiController]
-[Route("/api/sales")]
+[Route("api/ventas")]
 public class SalesController : ControllerBase
 {
     private readonly ISaleService _saleService;

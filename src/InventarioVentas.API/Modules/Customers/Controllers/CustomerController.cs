@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InventarioVentas.API.Modules.Customers.Controllers;
 
 [ApiController]
-[Route("api/customers")]
+[Route("api/clientes")]
 public class CustomersController : ControllerBase
 {
     private readonly ICustomerService _customerService;
@@ -16,7 +16,7 @@ public class CustomersController : ControllerBase
         _customerService = customerService;
     }
 
-    // GET: api/customers 
+    // GET: api/clientes
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CustomerResponse>>> GetAll()
     {
@@ -25,7 +25,7 @@ public class CustomersController : ControllerBase
         return Ok(customers);
     }
 
-    // GET: api/customers/{id}
+    // GET: api/clientes/{id}
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<CustomerResponse>> GetById(Guid id)
     {
@@ -37,7 +37,7 @@ public class CustomersController : ControllerBase
         return Ok(customer);
     }
 
-    // POST: api/customers
+    // POST: api/clientes
     [HttpPost]
     public async Task<ActionResult<CustomerResponse>> Create(
         CreateCustomerDto dto)
@@ -50,7 +50,7 @@ public class CustomersController : ControllerBase
             customer);
     }
 
-    // PUT: api/customers/{id}
+    // PUT: api/clientes/{id}
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(
         Guid id,
@@ -64,7 +64,7 @@ public class CustomersController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/customers/{id}
+    // DELETE: api/clientes/{id}
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {

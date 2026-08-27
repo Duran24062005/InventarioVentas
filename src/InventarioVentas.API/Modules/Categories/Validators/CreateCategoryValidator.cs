@@ -16,11 +16,6 @@ namespace InventarioVentas.API.Modules.Categories.Validators
                 .NotEmpty()
                 .MaximumLength(500);
 
-            RuleFor(x => x.CreatedAt)
-                .NotEmpty();
-
-            RuleFor(x => x.IsActive)
-                .NotEmpty();
         }
     }
 }

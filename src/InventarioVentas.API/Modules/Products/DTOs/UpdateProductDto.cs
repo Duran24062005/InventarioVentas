@@ -19,9 +19,7 @@ public class UpdateProductDto
     // Initial quantity. Must be greater than or equal to zero.
     [JsonPropertyName("stock")]
     public required int Stock { get; set; }
-    [JsonPropertyName("stock")]
-    public required DateTime CreatedAt { get; set; }
-    [JsonPropertyName("IsActive")]
+    [JsonPropertyName("estado")]
     public required bool IsActive {  get; set; }
     // Category identifier for the product.
     [JsonPropertyName("categoriaId")]
