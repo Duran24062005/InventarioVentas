@@ -40,7 +40,7 @@ Fuera de alcance: entidades, base de datos, migraciones, autenticación, autoriz
 - `builder.Services.AddScoped<ICategoryService, CategoryService>()` registra el servicio actual de Categorías.
 - Se eliminó `Microsoft.AspNetCore.OpenApi` y no se usa `AddOpenApi`; Swashbuckle es la estrategia única de documentación.
 - La composición permanece en `Program.cs` mientras se termina de definir el registro por módulo.
-- `CategoryDbContext` está registrado; los validadores y middleware todavía no están registrados en la composición.
+- `AppDbContext`, validadores y middleware están registrados mediante la composición actual; la verificación funcional del arranque queda pendiente.
 - La separación entre composición y reglas de negocio queda preparada para los PRDs posteriores.
 
 ## Interfaces y contratos afectados

@@ -35,9 +35,9 @@ Una solicitud entra por un controller de un modulo, se transforma mediante DTOs,
 
 Los modulos pueden colaborar cuando una regla lo exige, pero no deben acceder arbitrariamente a las carpetas internas de otro modulo. Si una dependencia entre modulos se vuelve compleja, documenta la decision antes de introducir una abstraccion nueva.
 
-Actualmente existe un CRUD inicial de Categorias conectado al `CategoryDbContext` provisional y al proveedor PostgreSQL. Productos solo tiene piezas iniciales y Clientes/Ventas no tienen endpoints funcionales. El siguiente paso es implementar el dominio y la persistencia completa definidos en PRD-002 y PRD-003.
+Actualmente existen endpoints funcionales para Categorías, Productos, Clientes y Ventas. Todos los services usan el `AppDbContext` único, registrado mediante `AddApplicationServices`, y las migraciones se generan con ese contexto.
 
-La ejecución requiere `ConnectionStrings:DefaultConnection`, que puede suministrarse mediante User Secrets, una variable de entorno o Docker Compose. `CategoryDbContext` ya está registrado en `Program.cs`; el contexto actual es provisional y debe integrarse en el `AppDbContext` completo al cerrar PRD-003.
+La ejecución requiere `ConnectionStrings:DefaultConnection`, que puede suministrarse mediante User Secrets, una variable de entorno o Docker Compose. La verificación contra PostgreSQL y las pruebas funcionales siguen pendientes.
 
 ## Antes de modificar
 

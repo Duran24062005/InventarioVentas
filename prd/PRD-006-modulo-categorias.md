@@ -10,7 +10,7 @@
 
 ## Problema y objetivo
 
-Los productos necesitan una clasificación persistida y validada. El módulo de Categorías ya tiene un CRUD inicial conectado al `CategoryDbContext` provisional, pero todavía no cumple todas las reglas de contrato, validación y eliminación lógica definidas en este PRD.
+Los productos necesitan una clasificación persistida y validada. El módulo de Categorías tiene un CRUD inicial conectado al `AppDbContext`; todavía debe verificarse contra PostgreSQL y completarse la política de eliminación lógica definida en este PRD.
 
 ## Alcance
 
@@ -65,10 +65,10 @@ El código actual no coincide completamente con este contrato: `CreateCategoryDt
 ## Estado actual de implementación
 
 - Existe `CategoriesController` con `GET`, `GET/{id}`, `POST`, `PUT/{id}` y `DELETE/{id}`.
-- Existe `CategoryService` con consultas y persistencia mediante `CategoryDbContext`.
+- Existe `CategoryService` con consultas y persistencia mediante `AppDbContext`.
 - Existe el modelo `Categoria` con `Guid Id`, `Nombre`, `Descripcion`, `FechaCreacion` y `Estado`.
 - Existen DTOs y un validator inicial, pero sus campos obligatorios no coinciden todavía con el contrato objetivo.
-- `ICategoryService` y `CategoryDbContext` están registrados en `Program.cs`; la conexión PostgreSQL se suministra por configuración.
+- `ICategoryService` y `AppDbContext` se registran mediante `AddApplicationServices`; la conexión PostgreSQL se suministra por configuración.
 - El controller devuelve `204 No Content` en actualización y eliminación, mientras el contrato documentado solicita `200 OK`.
 
 ## Impacto en datos e integraciones
