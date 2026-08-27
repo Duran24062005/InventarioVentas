@@ -1,4 +1,4 @@
-﻿using InventarioVentas.API.Data.Configurations;
+﻿using InventarioVentas.API.Data;
 using InventarioVentas.API.Modules.Customers.DTOs;
 using InventarioVentas.API.Modules.Customers.Interfaces;
 using InventarioVentas.API.Modules.Customers.Models;
@@ -9,9 +9,9 @@ namespace InventarioVentas.API.Modules.Customers.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly CustomerDbContext _context;
+        private readonly AppDbContext _context;
 
-        public CustomerService(CustomerDbContext context)
+        public CustomerService(AppDbContext context)
         {
             _context = context;
         }
@@ -107,7 +107,7 @@ namespace InventarioVentas.API.Modules.Customers.Services
             if (customer is null)
                 return false;
 
-            customer.NombreCompleto = dto.NobreCompleto;
+            customer.NombreCompleto = dto.NombreCompleto;
             customer.Documento = dto.Documento;
             customer.Email = dto.Email;
             customer.Telefono = dto.Telefono;

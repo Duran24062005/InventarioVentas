@@ -1,4 +1,4 @@
-﻿using InventarioVentas.API.Data.Configurations;
+﻿using InventarioVentas.API.Data;
 using InventarioVentas.API.Modules.Categories.DTOs;
 using InventarioVentas.API.Modules.Categories.Interfaces;
 using InventarioVentas.API.Modules.Categories.Models;
@@ -8,9 +8,9 @@ namespace InventarioVentas.API.Modules.Categories.Services;
 
 public class CategoryService : ICategoryService
 {
-    private readonly CategoryDbContext _context;
+    private readonly AppDbContext _context;
 
-    public CategoryService(CategoryDbContext context)
+    public CategoryService(AppDbContext context)
     {
         _context = context;
     }
