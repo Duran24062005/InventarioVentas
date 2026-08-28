@@ -1,4 +1,3 @@
-using InventarioVentas.API.Data;
 using InventarioVentas.API.Extensions;
 using InventarioVentas.API.Middleware;
 
