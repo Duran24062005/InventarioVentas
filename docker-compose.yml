@@ -7,6 +7,10 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 5011
       ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=inventarioventas;Username=postgres;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD before starting Compose}
+      Jwt__Key: ${JWT_KEY:?Set JWT_KEY before starting Compose}
+      Jwt__Issuer: ${JWT_ISSUER:-InventarioVentas.API}
+      Jwt__Audience: ${JWT_AUDIENCE:-InventarioVentas.Client}
+      Jwt__ExpiresMinutes: ${JWT_EXPIRES_MINUTES:-60}
     depends_on:
       postgres:
         condition: service_healthy
