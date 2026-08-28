@@ -27,6 +27,6 @@ public class ProductResponseDto
     [JsonPropertyName("CreateAt")]
     public DateTime CreatedAt { get; set; } 
 
-    [JsonPropertyName("nombreCtegoria")]
+    [JsonPropertyName("nombreCategoria")]
     public string CategoryName { get; set; } = string.Empty;
 }

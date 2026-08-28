@@ -98,7 +98,9 @@ public class ProductService : IProductService
             Stock = product.Stock,
             IsActive = product.IsActive,
             CategoryId = product.CategoryId,
-            CreatedAt = product.CreatedAt
+            CreatedAt = product.CreatedAt,
+            CategoryName = (await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == product.CategoryId))?.Name ?? string.Empty
         };
     }
 
