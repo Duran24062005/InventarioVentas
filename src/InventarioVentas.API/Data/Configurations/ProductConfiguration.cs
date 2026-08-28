@@ -2,7 +2,7 @@ using InventarioVentas.API.Modules.Products.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InventarioVentas.API.Data.Configurations;
+namespace InventarioVentas.API.Modules.Products.Configurations;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -23,20 +23,20 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsUnique();
 
         builder.Property(p => p.Price)
-            .HasPrecision(18, 2)
-            .IsRequired();
+            .HasPrecision(18, 2);
 
         builder.Property(p => p.Stock)
             .IsRequired();
 
         builder.Property(p => p.IsActive)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(true);
 
         builder.Property(p => p.CreatedAt)
             .IsRequired();
 
         builder.HasOne(p => p.Category)
-            .WithMany(c => c.Products)
+            .WithMany()
             .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
     }
