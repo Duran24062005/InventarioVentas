@@ -43,6 +43,7 @@ public class ExceptionMiddleware
         var statusCode = exception switch
         {
             NotFoundException => HttpStatusCode.NotFound,           // HTTP 404     https://http.cat/status/404
+            UnauthorizedException => HttpStatusCode.Unauthorized,   // HTTP 401
             BusinessException => HttpStatusCode.BadRequest,         // HTTP 400     https://http.cat/status/400
             ValidationException => HttpStatusCode.BadRequest,       // HTTP 400     https://http.cat/status/400
             _ => HttpStatusCode.InternalServerError                 // HTTP 500     https://http.cat/status/500
