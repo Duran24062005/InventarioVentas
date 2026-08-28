@@ -31,7 +31,11 @@ public class ProductService : IProductService
                 Stock = p.Stock,
                 IsActive = p.IsActive,
                 CategoryId = p.CategoryId,
-                CreatedAt = p.CreatedAt
+                CreatedAt = p.CreatedAt,
+                CategoryName = _context.Categories
+                    .Where(c => c.Id == p.CategoryId)
+                    .Select(c => c.Name)
+                    .FirstOrDefault() ?? string.Empty
             })
             .ToListAsync();
     }
@@ -57,7 +61,9 @@ public class ProductService : IProductService
             Stock = product.Stock,
             IsActive = product.IsActive,
             CategoryId = product.CategoryId,
-            CreatedAt = product.CreatedAt
+            CreatedAt = product.CreatedAt,
+            CategoryName = (await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == product.CategoryId))?.Name ?? string.Empty
         };
     }
 
