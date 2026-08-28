@@ -18,7 +18,7 @@ public class ProductsController : ControllerBase
 
     // GET: api/productos
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAllAsync()
+    public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAll()
     {
         var products = await _productService.GetAll();
 
@@ -26,8 +26,8 @@ public class ProductsController : ControllerBase
     }
 
     // GET: api/productos/{id}
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<ProductResponseDto>> GetByIdAsync(Guid id)
+    [HttpGet("{id:guid}", Name = "GetProductById")]
+    public async Task<ActionResult<ProductResponseDto>> GetById(Guid id)
     {
         var product = await _productService.GetById(id);
 
@@ -39,20 +39,20 @@ public class ProductsController : ControllerBase
 
     // POST: api/productos
     [HttpPost]
-    public async Task<ActionResult<ProductResponseDto>> CreateAsync(
+    public async Task<ActionResult<ProductResponseDto>> Create(
         CreateProductDto dto)
     {
         var product = await _productService.Create(dto);
 
-        return CreatedAtAction(
-            nameof(GetByIdAsync),
+        return CreatedAtRoute(
+            "GetProductById",
             new { id = product.Id },
             product);
     }
 
     // PUT: api/productos/{id}
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateAsync(
+    public async Task<IActionResult> Update(
         Guid id,
         UpdateProductDto dto)
     {
@@ -66,7 +66,7 @@ public class ProductsController : ControllerBase
 
     // DELETE: api/productos/{id}
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _productService.Delete(id);
 
